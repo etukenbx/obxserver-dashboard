@@ -1,3 +1,4 @@
+<!-- OBX'Server Wellness Coaching Template v1.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1208,6 +1209,16 @@
   const hour = new Date().getHours();
   const timeOfDay = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
   greeting.textContent = `Good ${timeOfDay}, Boedirep 🌿`;
+</script>
+  <script src="../../clients/boedirep/config.js"></script>
+<script>
+// Apply client config to dashboard
+document.title = OBXSERVER_CONFIG.client.name + " — Dashboard";
+document.querySelector('.brand-name').textContent = OBXSERVER_CONFIG.client.name;
+document.querySelector('.brand-tag').textContent = OBXSERVER_CONFIG.client.tagline;
+document.querySelector('.brand-logo').textContent = OBXSERVER_CONFIG.client.logo_initial;
+document.documentElement.style.setProperty('--sage', OBXSERVER_CONFIG.client.primary_color);
+document.documentElement.style.setProperty('--gold', OBXSERVER_CONFIG.client.accent_color);
 </script>
 </body>
 </html>
