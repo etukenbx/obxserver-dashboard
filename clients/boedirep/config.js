@@ -8,9 +8,9 @@ const OBXSERVER_CONFIG = {
     accent_color: "#C4942A"
   },
   frappe: {
-    site_url: "https://PASTE-THEIR-FRAPPE-SITE-URL-HERE",
-    api_key: "PASTE-API-KEY-HERE",
-    api_secret: "PASTE-API-SECRET-HERE"
+    site_url: "https://boedirep.jh.frappe.cloud",
+    api_key: "8efad55bcd23082",
+    api_secret: "809abef2d2111d0"
   },
   currency: {
     primary: "NGN",
