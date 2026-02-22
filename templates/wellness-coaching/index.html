@@ -1,4 +1,3 @@
-<!-- OBX'Server Wellness Coaching Template v1.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,18 +26,13 @@
     --red: #C0392B;
     --sidebar-w: 240px;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
   body {
     background: var(--cream);
     color: var(--text);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 400;
     display: flex;
     min-height: 100vh;
-    overflow-x: hidden;
   }
 
   /* SIDEBAR */
@@ -51,9 +45,7 @@
     display: flex;
     flex-direction: column;
     z-index: 50;
-    transition: transform 0.3s;
   }
-
   .sidebar-brand {
     padding: 2rem 1.5rem 1.5rem;
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -66,589 +58,204 @@
     font-family: 'Playfair Display', serif;
     font-weight: 700; font-size: 1.1rem;
     color: white; margin-bottom: 0.75rem;
-    letter-spacing: -0.02em;
   }
   .brand-name {
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem; font-weight: 700;
-    color: white; letter-spacing: -0.01em;
+    color: white;
   }
-  .brand-tag {
-    font-size: 0.7rem; color: rgba(255,255,255,0.5);
-    letter-spacing: 0.05em; text-transform: uppercase;
-    margin-top: 0.2rem;
-  }
-
-  .sidebar-nav {
-    flex: 1;
-    padding: 1.5rem 0;
-    overflow-y: auto;
-  }
-  .nav-section {
-    padding: 0 1rem;
-    margin-bottom: 0.25rem;
-  }
+  .brand-tag { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+  .sidebar-nav { flex: 1; padding: 1.5rem 0; }
+  .nav-section { padding: 0 1rem; margin-bottom: 0.25rem; }
   .nav-section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    padding: 0.75rem 0.5rem 0.4rem;
-    font-weight: 600;
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    padding: 0.75rem 0.5rem 0.4rem; font-weight: 600;
   }
   .nav-item {
     display: flex; align-items: center; gap: 0.75rem;
-    padding: 0.65rem 0.75rem;
-    border-radius: 8px;
+    padding: 0.65rem 0.75rem; border-radius: 8px;
     color: rgba(255,255,255,0.65);
     font-size: 0.875rem; font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    margin-bottom: 0.1rem;
+    cursor: pointer; transition: all 0.2s;
+    margin-bottom: 0.1rem; border: none;
+    background: transparent; width: 100%; text-align: left;
   }
-  .nav-item:hover {
-    background: rgba(255,255,255,0.1);
-    color: white;
-  }
-  .nav-item.active {
-    background: rgba(255,255,255,0.15);
-    color: white;
-  }
+  .nav-item:hover { background: rgba(255,255,255,0.1); color: white; }
+  .nav-item.active { background: rgba(255,255,255,0.15); color: white; }
   .nav-item.active .nav-icon { color: var(--gold-light); }
   .nav-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
   .nav-badge {
-    margin-left: auto;
-    background: var(--gold);
-    color: white;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 0.15rem 0.5rem;
-    border-radius: 100px;
-    min-width: 20px;
-    text-align: center;
+    margin-left: auto; background: var(--gold);
+    color: white; font-size: 0.65rem; font-weight: 700;
+    padding: 0.15rem 0.5rem; border-radius: 100px;
   }
-
   .sidebar-footer {
     padding: 1.25rem 1.5rem;
     border-top: 1px solid rgba(255,255,255,0.1);
   }
-  .user-card {
-    display: flex; align-items: center; gap: 0.75rem;
-  }
+  .user-card { display: flex; align-items: center; gap: 0.75rem; }
   .user-avatar {
     width: 34px; height: 34px;
     background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700; color: white;
-    flex-shrink: 0;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 0.8rem;
+    font-weight: 700; color: white; flex-shrink: 0;
   }
   .user-name { font-size: 0.82rem; font-weight: 600; color: white; }
   .user-role { font-size: 0.7rem; color: rgba(255,255,255,0.45); }
 
-  /* MAIN CONTENT */
-  .main {
-    margin-left: var(--sidebar-w);
-    flex: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* TOPBAR */
+  /* MAIN */
+  .main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
   .topbar {
-    background: var(--white);
-    border-bottom: 1px solid var(--cream3);
-    padding: 1rem 2rem;
-    display: flex; align-items: center;
-    justify-content: space-between;
-    position: sticky; top: 0; z-index: 40;
+    background: var(--white); border-bottom: 1px solid var(--cream3);
+    padding: 1rem 2rem; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 40;
   }
-  .topbar-left h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem; font-weight: 700;
-    color: var(--text);
-  }
-  .topbar-left p {
-    font-size: 0.8rem; color: var(--text-dim);
-    margin-top: 0.1rem;
-  }
-  .topbar-right {
-    display: flex; align-items: center; gap: 1rem;
-  }
+  .topbar-left h1 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; }
+  .topbar-left p { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.1rem; }
+  .topbar-right { display: flex; align-items: center; gap: 1rem; }
   .topbar-btn {
-    background: var(--sage-faint);
-    border: 1px solid var(--sage-border);
-    color: var(--sage);
-    padding: 0.5rem 1.1rem;
-    border-radius: 7px;
-    font-size: 0.82rem; font-weight: 600;
-    cursor: pointer;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    transition: all 0.2s;
+    background: var(--sage-faint); border: 1px solid var(--sage-border);
+    color: var(--sage); padding: 0.5rem 1.1rem; border-radius: 7px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s;
   }
-  .topbar-btn:hover {
-    background: var(--sage);
-    color: white;
-  }
-  .topbar-btn.primary {
-    background: var(--sage);
-    color: white; border-color: var(--sage);
-  }
-  .topbar-btn.primary:hover { background: var(--sage-dim); }
-  .notif-btn {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    background: var(--cream2);
-    border: 1px solid var(--cream3);
+  .topbar-btn:hover { background: var(--sage); color: white; }
+  .topbar-btn.primary { background: var(--sage); color: white; border-color: var(--sage); }
+
+  /* PAGES */
+  .page { display: none; padding: 2rem; flex: 1; }
+  .page.active { display: block; }
+
+  /* LOADING */
+  .loading-spinner {
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 1rem;
-    position: relative;
+    padding: 3rem; flex-direction: column; gap: 1rem;
   }
-  .notif-dot {
-    position: absolute; top: 6px; right: 6px;
-    width: 7px; height: 7px;
-    background: var(--gold);
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--cream3);
+    border-top-color: var(--sage);
     border-radius: 50%;
-    border: 1.5px solid white;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 0.85rem; color: var(--text-faint); }
+
+  /* ERROR */
+  .error-box {
+    background: rgba(192,57,43,0.06);
+    border: 1px solid rgba(192,57,43,0.2);
+    border-radius: 10px; padding: 1.25rem 1.5rem;
+    font-size: 0.85rem; color: var(--red);
+    margin-bottom: 1rem;
   }
 
-  /* CONTENT AREA */
-  .content {
-    padding: 2rem;
-    flex: 1;
+  /* CONNECTION STATUS */
+  .conn-status {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; font-weight: 600;
+    padding: 0.35rem 0.85rem; border-radius: 100px;
   }
+  .conn-status.connected { background: rgba(74,124,89,0.1); color: var(--sage); }
+  .conn-status.disconnected { background: rgba(192,57,43,0.08); color: var(--red); }
+  .conn-status.loading { background: rgba(196,148,42,0.1); color: var(--gold); }
+  .conn-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 
-  /* STAT CARDS ROW */
+  /* STATS */
   .stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-    margin-bottom: 1.75rem;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem; margin-bottom: 1.75rem;
   }
   .stat-card {
-    background: var(--white);
-    border: 1px solid var(--cream3);
-    border-radius: 14px;
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--white); border: 1px solid var(--cream3);
+    border-radius: 14px; padding: 1.5rem; position: relative;
+    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
   }
-  .stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.07);
-  }
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .stat-card.green::before { background: linear-gradient(90deg, var(--sage), var(--sage-light)); }
   .stat-card.gold::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
   .stat-card.brown::before { background: linear-gradient(90deg, var(--brown), var(--brown-light)); }
   .stat-card.red::before { background: var(--red); }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--text-faint);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-  }
-  .stat-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-  .stat-value .currency {
-    font-size: 1rem;
-    color: var(--text-dim);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 500;
-  }
-  .stat-change {
-    font-size: 0.78rem;
-    display: flex; align-items: center; gap: 0.3rem;
-    color: var(--text-dim);
-  }
+  .stat-label { font-size: 0.75rem; color: var(--text-faint); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.75rem; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 0.4rem; }
+  .stat-change { font-size: 0.78rem; color: var(--text-dim); }
   .stat-change.up { color: var(--sage); }
   .stat-change.down { color: var(--red); }
   .stat-icon {
-    position: absolute;
-    top: 1.25rem; right: 1.25rem;
-    width: 36px; height: 36px;
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
   }
   .stat-icon.green { background: var(--sage-faint); }
   .stat-icon.gold { background: rgba(196,148,42,0.08); }
-  .stat-icon.brown { background: rgba(92,74,50,0.08); }
   .stat-icon.red { background: rgba(192,57,43,0.08); }
 
-  /* TWO COLUMN GRID */
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 1.25rem;
-    margin-bottom: 1.75rem;
-  }
-
   /* CARDS */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--cream3);
-    border-radius: 14px;
-    overflow: hidden;
-  }
+  .card { background: var(--white); border: 1px solid var(--cream3); border-radius: 14px; overflow: hidden; margin-bottom: 1.5rem; }
   .card-header {
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--cream2);
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--cream2);
     display: flex; align-items: center; justify-content: space-between;
   }
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem; font-weight: 700;
-    color: var(--text);
-  }
-  .card-subtitle {
-    font-size: 0.75rem; color: var(--text-faint);
-    margin-top: 0.1rem;
-  }
-  .card-action {
-    font-size: 0.78rem; color: var(--sage);
-    font-weight: 600; cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .card-action:hover { opacity: 0.7; }
-  .card-body { padding: 1.5rem; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; }
+  .card-subtitle { font-size: 0.75rem; color: var(--text-faint); margin-top: 0.1rem; }
 
-  /* PROGRAMS TABLE */
-  .program-list { display: flex; flex-direction: column; gap: 0; }
-  .program-item {
-    display: flex; align-items: center;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--cream2);
-    gap: 1rem;
-    transition: background 0.15s;
-    cursor: pointer;
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-faint);
+    padding: 0.75rem 1.5rem; text-align: left;
+    background: var(--cream); border-bottom: 1px solid var(--cream3);
   }
-  .program-item:last-child { border-bottom: none; }
-  .program-item:hover { background: var(--cream); }
-  .program-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%; flex-shrink: 0;
-  }
-  .program-dot.active { background: var(--sage); }
-  .program-dot.upcoming { background: var(--gold); }
-  .program-dot.full { background: var(--red); }
-  .program-info { flex: 1; }
-  .program-name {
-    font-size: 0.875rem; font-weight: 600;
-    color: var(--text); margin-bottom: 0.2rem;
-  }
-  .program-meta {
-    font-size: 0.75rem; color: var(--text-faint);
-    display: flex; gap: 1rem;
-  }
-  .program-stats {
-    text-align: right; flex-shrink: 0;
-  }
-  .program-enrolled {
-    font-size: 0.875rem; font-weight: 700;
-    color: var(--text);
-  }
-  .program-capacity {
-    font-size: 0.72rem; color: var(--text-faint);
-  }
-  .program-revenue {
-    font-size: 0.8rem; font-weight: 600;
-    color: var(--sage); margin-top: 0.15rem;
-  }
-  .status-pill {
-    font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    padding: 0.2rem 0.6rem;
-    border-radius: 100px;
-    flex-shrink: 0;
-  }
-  .status-pill.active {
-    background: rgba(74,124,89,0.1);
-    color: var(--sage);
-  }
-  .status-pill.upcoming {
-    background: rgba(196,148,42,0.1);
-    color: var(--gold);
-  }
-  .status-pill.full {
-    background: rgba(192,57,43,0.08);
-    color: var(--red);
-  }
+  .data-table td { padding: 0.9rem 1.5rem; font-size: 0.85rem; border-bottom: 1px solid var(--cream2); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--cream); }
 
-  /* UPCOMING SESSIONS */
-  .session-list { display: flex; flex-direction: column; gap: 0; }
-  .session-item {
-    display: flex; align-items: center;
-    padding: 0.9rem 1.5rem;
-    border-bottom: 1px solid var(--cream2);
-    gap: 1rem;
+  /* PILLS */
+  .pill {
+    font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.65rem;
+    border-radius: 100px; text-transform: uppercase; letter-spacing: 0.03em;
   }
-  .session-item:last-child { border-bottom: none; }
-  .session-time-box {
-    width: 44px; flex-shrink: 0;
-    text-align: center;
-  }
-  .session-time {
-    font-size: 0.78rem; font-weight: 700;
-    color: var(--sage); line-height: 1;
-  }
-  .session-period {
-    font-size: 0.65rem; color: var(--text-faint);
-    text-transform: uppercase;
-  }
-  .session-divider {
-    width: 1px; height: 32px;
-    background: var(--cream3); flex-shrink: 0;
-  }
-  .session-info { flex: 1; }
-  .session-name {
-    font-size: 0.85rem; font-weight: 600;
-    color: var(--text); margin-bottom: 0.15rem;
-  }
-  .session-coach {
-    font-size: 0.73rem; color: var(--text-faint);
-  }
-  .session-count {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    font-weight: 500;
-    flex-shrink: 0;
-  }
+  .pill.paid { background: rgba(74,124,89,0.1); color: var(--sage); }
+  .pill.unpaid, .pill.overdue { background: rgba(192,57,43,0.08); color: var(--red); }
+  .pill.draft { background: rgba(196,148,42,0.1); color: var(--gold); }
+  .pill.open { background: rgba(192,57,43,0.08); color: var(--red); }
+  .pill.resolved { background: rgba(74,124,89,0.1); color: var(--sage); }
+  .pill.replied { background: rgba(196,148,42,0.1); color: var(--gold); }
+  .pill.active-emp { background: rgba(74,124,89,0.1); color: var(--sage); }
 
-  /* THREE COLUMN */
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-bottom: 1.75rem;
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center; padding: 3rem;
+    color: var(--text-faint); font-size: 0.9rem;
   }
+  .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
 
-  /* REVENUE CHART PLACEHOLDER */
-  .chart-area {
-    height: 160px;
-    position: relative;
-    display: flex; align-items: flex-end;
-    gap: 0.5rem;
-    padding: 0 0.5rem;
-  }
-  .chart-bar-wrap {
-    flex: 1;
-    display: flex; flex-direction: column;
-    align-items: center; gap: 0.4rem;
-  }
-  .chart-bar {
-    width: 100%;
-    border-radius: 6px 6px 0 0;
-    background: var(--sage-faint);
-    border: 1px solid var(--sage-border);
-    transition: background 0.2s;
-    cursor: pointer;
-    min-height: 4px;
-  }
-  .chart-bar.current {
-    background: linear-gradient(180deg, var(--sage-light), var(--sage));
-    border-color: var(--sage);
-  }
-  .chart-bar:hover { background: var(--sage); border-color: var(--sage-dim); }
-  .chart-bar.current:hover { background: var(--sage-dim); }
-  .chart-label {
-    font-size: 0.68rem; color: var(--text-faint);
-    font-weight: 500;
-  }
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
-  /* CLIENTS TABLE */
-  .client-table { width: 100%; border-collapse: collapse; }
-  .client-table th {
-    font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--text-faint);
-    padding: 0.75rem 1.5rem;
-    text-align: left;
-    background: var(--cream);
-    border-bottom: 1px solid var(--cream3);
+  /* SETUP BANNER */
+  .setup-banner {
+    background: linear-gradient(135deg, rgba(196,148,42,0.12), rgba(196,148,42,0.05));
+    border: 1px solid rgba(196,148,42,0.3);
+    border-radius: 12px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem; display: flex;
+    align-items: center; gap: 1rem;
   }
-  .client-table td {
-    padding: 0.9rem 1.5rem;
-    font-size: 0.85rem;
-    border-bottom: 1px solid var(--cream2);
-    color: var(--text);
-  }
-  .client-table tr:last-child td { border-bottom: none; }
-  .client-table tr:hover td { background: var(--cream); }
-  .client-name { font-weight: 600; }
-  .client-email { font-size: 0.75rem; color: var(--text-faint); margin-top: 0.1rem; }
-  .client-avatar-sm {
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.72rem; font-weight: 700;
-    color: white; flex-shrink: 0;
-  }
-  .client-row-inner { display: flex; align-items: center; gap: 0.75rem; }
-  .payment-pill {
-    font-size: 0.7rem; font-weight: 700;
-    padding: 0.2rem 0.6rem; border-radius: 100px;
-    text-transform: uppercase; letter-spacing: 0.03em;
-  }
-  .payment-pill.paid {
-    background: rgba(74,124,89,0.1); color: var(--sage);
-  }
-  .payment-pill.pending {
-    background: rgba(196,148,42,0.1); color: var(--gold);
-  }
-  .payment-pill.overdue {
-    background: rgba(192,57,43,0.08); color: var(--red);
-  }
+  .setup-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .setup-banner-text { font-size: 0.875rem; line-height: 1.6; }
+  .setup-banner-text strong { color: var(--gold); display: block; margin-bottom: 0.2rem; }
 
-  /* STAFF CARDS */
-  .staff-list { display: flex; flex-direction: column; gap: 0; }
-  .staff-item {
-    display: flex; align-items: center; gap: 0.9rem;
-    padding: 0.9rem 1.5rem;
-    border-bottom: 1px solid var(--cream2);
-  }
-  .staff-item:last-child { border-bottom: none; }
-  .staff-avatar {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700; color: white;
-    flex-shrink: 0;
-  }
-  .staff-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
-  .staff-role { font-size: 0.73rem; color: var(--text-faint); }
-  .staff-sessions {
-    margin-left: auto;
-    text-align: right;
-  }
-  .staff-sessions-count {
-    font-size: 0.85rem; font-weight: 700; color: var(--sage);
-  }
-  .staff-sessions-label {
-    font-size: 0.68rem; color: var(--text-faint);
-  }
-
-  /* SUPPORT TICKETS */
-  .ticket-list { display: flex; flex-direction: column; gap: 0; }
-  .ticket-item {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--cream2);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .ticket-item:last-child { border-bottom: none; }
-  .ticket-item:hover { background: var(--cream); }
-  .ticket-top {
-    display: flex; align-items: center;
-    justify-content: space-between; margin-bottom: 0.3rem;
-  }
-  .ticket-subject {
-    font-size: 0.85rem; font-weight: 600; color: var(--text);
-  }
-  .ticket-id {
-    font-size: 0.7rem; color: var(--text-faint);
-    font-weight: 500;
-  }
-  .ticket-meta {
-    font-size: 0.75rem; color: var(--text-faint);
-    display: flex; gap: 1rem; align-items: center;
-  }
-  .priority-dot {
-    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-  }
-  .priority-dot.high { background: var(--red); }
-  .priority-dot.medium { background: var(--gold); }
-  .priority-dot.low { background: var(--sage); }
-
-  /* QUICK ACTIONS */
-  .quick-actions {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem; padding: 1.5rem;
-  }
-  .quick-btn {
-    background: var(--cream);
-    border: 1px solid var(--cream3);
-    border-radius: 10px;
-    padding: 1rem;
-    display: flex; flex-direction: column;
-    align-items: flex-start; gap: 0.4rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-  }
-  .quick-btn:hover {
-    border-color: var(--sage-border);
-    background: var(--sage-faint);
-  }
-  .quick-btn-icon { font-size: 1.2rem; }
-  .quick-btn-label {
-    font-size: 0.8rem; font-weight: 600; color: var(--text);
-    line-height: 1.2;
-  }
-
-  /* CURRENCY TOGGLE */
-  .currency-toggle {
-    display: flex; align-items: center; gap: 0.25rem;
-    background: var(--cream2);
-    border-radius: 7px; padding: 0.2rem;
-    border: 1px solid var(--cream3);
-  }
-  .curr-btn {
-    padding: 0.25rem 0.6rem;
-    border-radius: 5px;
-    font-size: 0.72rem; font-weight: 700;
-    cursor: pointer; border: none;
-    background: transparent;
-    color: var(--text-faint);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    transition: all 0.15s;
-  }
-  .curr-btn.active {
-    background: var(--white);
-    color: var(--sage);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .stats-row { animation: fadeUp 0.5s ease both; }
-  .grid-2 { animation: fadeUp 0.5s 0.1s ease both; }
-  .grid-3 { animation: fadeUp 0.5s 0.2s ease both; }
-
-  /* RESPONSIVE */
-  @media (max-width: 1100px) {
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .grid-3 { grid-template-columns: repeat(2, 1fr); }
-  }
+  @media (max-width: 1100px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
   @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); }
     .main { margin-left: 0; }
+    .stats-row { grid-template-columns: repeat(2,1fr); }
     .grid-2 { grid-template-columns: 1fr; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .grid-3 { grid-template-columns: 1fr; }
-    .content { padding: 1rem; }
-    .topbar { padding: 1rem; }
+    .page { padding: 1rem; }
   }
 </style>
 </head>
@@ -661,64 +268,35 @@
     <div class="brand-name">Boedirep</div>
     <div class="brand-tag">Wellness Coaching</div>
   </div>
-
   <nav class="sidebar-nav">
     <div class="nav-section">
       <div class="nav-section-label">Overview</div>
-      <a class="nav-item active" href="#">
+      <button class="nav-item active" onclick="showPage('dashboard')">
         <span class="nav-icon">⬡</span> Dashboard
-      </a>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">📊</span> Analytics
-      </a>
+      </button>
     </div>
-
-    <div class="nav-section">
-      <div class="nav-section-label">Programs</div>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">🌿</span> All Programs
-      </a>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">📅</span> Sessions
-      </a>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">👥</span> Participants
-      </a>
-    </div>
-
     <div class="nav-section">
       <div class="nav-section-label">Business</div>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">💰</span> Finance
-      </a>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">🔁</span> CRM & Leads
-      </a>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">👤</span> HR & Staff
-      </a>
-      <a class="nav-item" href="#">
+      <button class="nav-item" onclick="showPage('finance')">
+        <span class="nav-icon">💰</span> Finance & Invoices
+      </button>
+      <button class="nav-item" onclick="showPage('clients')">
+        <span class="nav-icon">👥</span> Clients
+      </button>
+      <button class="nav-item" onclick="showPage('support')">
         <span class="nav-icon">🎧</span> Support
-        <span class="nav-badge">3</span>
-      </a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-section-label">Settings</div>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">⚙️</span> Settings
-      </a>
-      <a class="nav-item" href="#">
-        <span class="nav-icon">🔔</span> Notifications
-      </a>
+        <span class="nav-badge" id="ticket-badge">...</span>
+      </button>
+      <button class="nav-item" onclick="showPage('hr')">
+        <span class="nav-icon">👤</span> HR & Staff
+      </button>
     </div>
   </nav>
-
   <div class="sidebar-footer">
     <div class="user-card">
       <div class="user-avatar">AD</div>
       <div>
-        <div class="user-name">Admin</div>
+        <div class="user-name">Administrator</div>
         <div class="user-role">Boedirep Admin</div>
       </div>
     </div>
@@ -727,498 +305,568 @@
 
 <!-- MAIN -->
 <div class="main">
-
-  <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-left">
-      <h1>Good morning, Boedirep 🌿</h1>
-      <p>Sunday, 22 February 2026 · Here's what's happening today</p>
+      <h1 id="page-title">Dashboard</h1>
+      <p id="page-date"></p>
     </div>
     <div class="topbar-right">
-      <div class="currency-toggle">
-        <button class="curr-btn active" onclick="setCurr(this,'NGN')">NGN</button>
-        <button class="curr-btn" onclick="setCurr(this,'USD')">USD</button>
+      <div class="conn-status loading" id="conn-status">
+        <div class="conn-dot"></div>
+        <span id="conn-text">Connecting...</span>
       </div>
-      <button class="topbar-btn" onclick="alert('New program form coming soon')">+ New Program</button>
-      <button class="topbar-btn primary" onclick="alert('New invoice form coming soon')">+ Invoice</button>
-      <div class="notif-btn">🔔<div class="notif-dot"></div></div>
     </div>
   </header>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <!-- DASHBOARD PAGE -->
+  <div class="page active" id="page-dashboard">
+    <div id="setup-notice" class="setup-banner" style="display:none">
+      <div class="setup-banner-icon">⚙️</div>
+      <div class="setup-banner-text">
+        <strong>API credentials needed</strong>
+        Open this file and replace PASTE_API_KEY_HERE and PASTE_API_SECRET_HERE with your real Frappe API credentials to see live data.
+      </div>
+    </div>
 
-    <!-- STATS ROW -->
     <div class="stats-row">
       <div class="stat-card green">
-        <div class="stat-icon green">🌿</div>
-        <div class="stat-label">Active Participants</div>
-        <div class="stat-value">84</div>
-        <div class="stat-change up">↑ 12 this month</div>
+        <div class="stat-icon green">👥</div>
+        <div class="stat-label">Total Clients</div>
+        <div class="stat-value" id="stat-clients">—</div>
+        <div class="stat-change" id="stat-clients-sub">Loading...</div>
       </div>
       <div class="stat-card gold">
         <div class="stat-icon gold">💰</div>
-        <div class="stat-label">Monthly Revenue</div>
-        <div class="stat-value"><span class="currency" id="curr-symbol">₦</span><span id="rev-val">1.24M</span></div>
-        <div class="stat-change up">↑ 18% vs last month</div>
+        <div class="stat-label">Total Invoiced</div>
+        <div class="stat-value" id="stat-revenue">—</div>
+        <div class="stat-change up" id="stat-revenue-sub">Loading...</div>
       </div>
       <div class="stat-card brown">
-        <div class="stat-icon brown">📋</div>
-        <div class="stat-label">Active Programs</div>
-        <div class="stat-value">6</div>
-        <div class="stat-change">2 starting next week</div>
+        <div class="stat-icon" style="background:rgba(92,74,50,0.08)">📋</div>
+        <div class="stat-label">Unpaid Invoices</div>
+        <div class="stat-value" id="stat-unpaid">—</div>
+        <div class="stat-change down" id="stat-unpaid-sub">Loading...</div>
       </div>
       <div class="stat-card red">
-        <div class="stat-icon red">⚠️</div>
-        <div class="stat-label">Unpaid Invoices</div>
-        <div class="stat-value">5</div>
-        <div class="stat-change down">↑ 2 overdue</div>
+        <div class="stat-icon red">🎧</div>
+        <div class="stat-label">Open Tickets</div>
+        <div class="stat-value" id="stat-tickets">—</div>
+        <div class="stat-change" id="stat-tickets-sub">Loading...</div>
       </div>
     </div>
 
-    <!-- PROGRAMS + SESSIONS -->
     <div class="grid-2">
-
-      <!-- PROGRAMS -->
       <div class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">Programs</div>
-            <div class="card-subtitle">All active & upcoming group programs</div>
-          </div>
-          <a class="card-action" href="#">View all →</a>
-        </div>
-        <div class="program-list">
-          <div class="program-item">
-            <div class="program-dot active"></div>
-            <div class="program-info">
-              <div class="program-name">Mind-Body Reset — Cohort 3</div>
-              <div class="program-meta">
-                <span>8 weeks</span>
-                <span>Mon & Wed 7pm</span>
-              </div>
-            </div>
-            <div class="program-stats">
-              <div class="program-enrolled">18/20</div>
-              <div class="program-capacity">participants</div>
-              <div class="program-revenue">₦360,000</div>
-            </div>
-            <span class="status-pill active">Active</span>
-          </div>
-          <div class="program-item">
-            <div class="program-dot active"></div>
-            <div class="program-info">
-              <div class="program-name">Stress-Free Living</div>
-              <div class="program-meta">
-                <span>6 weeks</span>
-                <span>Tue & Thu 6pm</span>
-              </div>
-            </div>
-            <div class="program-stats">
-              <div class="program-enrolled">14/15</div>
-              <div class="program-capacity">participants</div>
-              <div class="program-revenue">₦210,000</div>
-            </div>
-            <span class="status-pill active">Active</span>
-          </div>
-          <div class="program-item">
-            <div class="program-dot full"></div>
-            <div class="program-info">
-              <div class="program-name">Holistic Nutrition — Intensive</div>
-              <div class="program-meta">
-                <span>4 weeks</span>
-                <span>Sat 10am</span>
-              </div>
-            </div>
-            <div class="program-stats">
-              <div class="program-enrolled">12/12</div>
-              <div class="program-capacity">participants</div>
-              <div class="program-revenue">₦288,000</div>
-            </div>
-            <span class="status-pill full">Full</span>
-          </div>
-          <div class="program-item">
-            <div class="program-dot upcoming"></div>
-            <div class="program-info">
-              <div class="program-name">Emotional Resilience — Cohort 2</div>
-              <div class="program-meta">
-                <span>Starts Mar 3</span>
-                <span>Fri 5pm</span>
-              </div>
-            </div>
-            <div class="program-stats">
-              <div class="program-enrolled">7/20</div>
-              <div class="program-capacity">enrolled</div>
-              <div class="program-revenue">₦105,000</div>
-            </div>
-            <span class="status-pill upcoming">Upcoming</span>
+            <div class="card-title">Recent Invoices</div>
+            <div class="card-subtitle">Latest billing activity</div>
           </div>
         </div>
+        <div id="dash-invoices"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Loading invoices...</div></div></div>
       </div>
-
-      <!-- TODAY'S SESSIONS + QUICK ACTIONS -->
-      <div style="display:flex;flex-direction:column;gap:1.25rem;">
-
-        <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Today's Sessions</div>
-              <div class="card-subtitle">Sunday, 22 February</div>
-            </div>
-            <a class="card-action" href="#">Schedule →</a>
-          </div>
-          <div class="session-list">
-            <div class="session-item">
-              <div class="session-time-box">
-                <div class="session-time">10:00</div>
-                <div class="session-period">AM</div>
-              </div>
-              <div class="session-divider"></div>
-              <div class="session-info">
-                <div class="session-name">Holistic Nutrition</div>
-                <div class="session-coach">Coach Amara</div>
-              </div>
-              <div class="session-count">12 joining</div>
-            </div>
-            <div class="session-item">
-              <div class="session-time-box">
-                <div class="session-time">02:00</div>
-                <div class="session-period">PM</div>
-              </div>
-              <div class="session-divider"></div>
-              <div class="session-info">
-                <div class="session-name">Mind-Body Reset</div>
-                <div class="session-coach">Coach Tunde</div>
-              </div>
-              <div class="session-count">18 joining</div>
-            </div>
-            <div class="session-item">
-              <div class="session-time-box">
-                <div class="session-time">06:00</div>
-                <div class="session-period">PM</div>
-              </div>
-              <div class="session-divider"></div>
-              <div class="session-info">
-                <div class="session-name">Stress-Free Living</div>
-                <div class="session-coach">Coach Ngozi</div>
-              </div>
-              <div class="session-count">14 joining</div>
-            </div>
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Recent Clients</div>
+            <div class="card-subtitle">Latest enrollments</div>
           </div>
         </div>
-
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">Quick Actions</div>
-          </div>
-          <div class="quick-actions">
-            <button class="quick-btn">
-              <span class="quick-btn-icon">📨</span>
-              <span class="quick-btn-label">Send Invoice</span>
-            </button>
-            <button class="quick-btn">
-              <span class="quick-btn-icon">➕</span>
-              <span class="quick-btn-label">Enrol Client</span>
-            </button>
-            <button class="quick-btn">
-              <span class="quick-btn-icon">📞</span>
-              <span class="quick-btn-label">Log Call / Lead</span>
-            </button>
-            <button class="quick-btn">
-              <span class="quick-btn-icon">📝</span>
-              <span class="quick-btn-label">Add Session Note</span>
-            </button>
-          </div>
-        </div>
-
+        <div id="dash-clients"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Loading clients...</div></div></div>
       </div>
     </div>
+  </div>
 
-    <!-- REVENUE CHART + STAFF + SUPPORT -->
-    <div class="grid-3">
-
-      <!-- REVENUE CHART -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Revenue</div>
-            <div class="card-subtitle">Last 8 months</div>
-          </div>
-          <span style="font-size:0.75rem;color:var(--sage);font-weight:600;">2025–2026</span>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:55px;" title="Jul: ₦780k"></div>
-              <span class="chart-label">Jul</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:70px;" title="Aug: ₦920k"></div>
-              <span class="chart-label">Aug</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:62px;" title="Sep: ₦840k"></div>
-              <span class="chart-label">Sep</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:90px;" title="Oct: ₦1.1M"></div>
-              <span class="chart-label">Oct</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:80px;" title="Nov: ₦1.0M"></div>
-              <span class="chart-label">Nov</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:100px;" title="Dec: ₦1.2M"></div>
-              <span class="chart-label">Dec</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar" style="height:110px;" title="Jan: ₦1.3M"></div>
-              <span class="chart-label">Jan</span>
-            </div>
-            <div class="chart-bar-wrap">
-              <div class="chart-bar current" style="height:124px;" title="Feb: ₦1.24M"></div>
-              <span class="chart-label" style="color:var(--sage);font-weight:700;">Feb</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- STAFF -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Coaches & Staff</div>
-            <div class="card-subtitle">Active team members</div>
-          </div>
-          <a class="card-action" href="#">HR →</a>
-        </div>
-        <div class="staff-list">
-          <div class="staff-item">
-            <div class="staff-avatar" style="background:linear-gradient(135deg,#4A7C59,#2D5C3A)">AM</div>
-            <div>
-              <div class="staff-name">Amara Obi</div>
-              <div class="staff-role">Lead Nutritionist</div>
-            </div>
-            <div class="staff-sessions">
-              <div class="staff-sessions-count">4</div>
-              <div class="staff-sessions-label">sessions/wk</div>
-            </div>
-          </div>
-          <div class="staff-item">
-            <div class="staff-avatar" style="background:linear-gradient(135deg,#C4942A,#8B6520)">TU</div>
-            <div>
-              <div class="staff-name">Tunde Adeyemi</div>
-              <div class="staff-role">Mind-Body Coach</div>
-            </div>
-            <div class="staff-sessions">
-              <div class="staff-sessions-count">6</div>
-              <div class="staff-sessions-label">sessions/wk</div>
-            </div>
-          </div>
-          <div class="staff-item">
-            <div class="staff-avatar" style="background:linear-gradient(135deg,#5C4A32,#3D2E1A)">NG</div>
-            <div>
-              <div class="staff-name">Ngozi Eze</div>
-              <div class="staff-role">Wellness Coach</div>
-            </div>
-            <div class="staff-sessions">
-              <div class="staff-sessions-count">5</div>
-              <div class="staff-sessions-label">sessions/wk</div>
-            </div>
-          </div>
-          <div class="staff-item">
-            <div class="staff-avatar" style="background:linear-gradient(135deg,#6B5B95,#4A3D6B)">FK</div>
-            <div>
-              <div class="staff-name">Fatima Kalu</div>
-              <div class="staff-role">Program Coordinator</div>
-            </div>
-            <div class="staff-sessions">
-              <div class="staff-sessions-count">—</div>
-              <div class="staff-sessions-label">admin</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SUPPORT TICKETS -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Support</div>
-            <div class="card-subtitle">Open client tickets</div>
-          </div>
-          <a class="card-action" href="#">View all →</a>
-        </div>
-        <div class="ticket-list">
-          <div class="ticket-item">
-            <div class="ticket-top">
-              <div class="ticket-subject">Can't access session link</div>
-              <div class="ticket-id">#0042</div>
-            </div>
-            <div class="ticket-meta">
-              <div class="priority-dot high"></div>
-              <span>High · Chisom Ike</span>
-              <span>2h ago</span>
-            </div>
-          </div>
-          <div class="ticket-item">
-            <div class="ticket-top">
-              <div class="ticket-subject">Request to switch program</div>
-              <div class="ticket-id">#0041</div>
-            </div>
-            <div class="ticket-meta">
-              <div class="priority-dot medium"></div>
-              <span>Medium · Ade Bello</span>
-              <span>Yesterday</span>
-            </div>
-          </div>
-          <div class="ticket-item">
-            <div class="ticket-top">
-              <div class="ticket-subject">Invoice payment question</div>
-              <div class="ticket-id">#0040</div>
-            </div>
-            <div class="ticket-meta">
-              <div class="priority-dot low"></div>
-              <span>Low · Grace Nweke</span>
-              <span>2 days ago</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CLIENTS TABLE -->
+  <!-- FINANCE PAGE -->
+  <div class="page" id="page-finance">
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">Recent Clients</div>
-          <div class="card-subtitle">Latest enrollments and payment status</div>
+          <div class="card-title">All Invoices</div>
+          <div class="card-subtitle">Complete billing history from Frappe</div>
         </div>
-        <a class="card-action" href="#">All clients →</a>
       </div>
-      <table class="client-table">
-        <thead>
-          <tr>
-            <th>Client</th>
-            <th>Program</th>
-            <th>Enrolled</th>
-            <th>Amount</th>
-            <th>Payment</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="client-row-inner">
-                <div class="client-avatar-sm" style="background:linear-gradient(135deg,#4A7C59,#2D5C3A)">CI</div>
-                <div>
-                  <div class="client-name">Chisom Ikenna</div>
-                  <div class="client-email">chisom@email.com</div>
-                </div>
-              </div>
-            </td>
-            <td>Mind-Body Reset</td>
-            <td>Feb 10, 2026</td>
-            <td>₦20,000</td>
-            <td><span class="payment-pill paid">Paid</span></td>
-          </tr>
-          <tr>
-            <td>
-              <div class="client-row-inner">
-                <div class="client-avatar-sm" style="background:linear-gradient(135deg,#C4942A,#8B6520)">AB</div>
-                <div>
-                  <div class="client-name">Ade Bankole</div>
-                  <div class="client-email">ade@email.com</div>
-                </div>
-              </div>
-            </td>
-            <td>Stress-Free Living</td>
-            <td>Feb 14, 2026</td>
-            <td>₦15,000</td>
-            <td><span class="payment-pill pending">Pending</span></td>
-          </tr>
-          <tr>
-            <td>
-              <div class="client-row-inner">
-                <div class="client-avatar-sm" style="background:linear-gradient(135deg,#5C4A32,#3D2E1A)">GN</div>
-                <div>
-                  <div class="client-name">Grace Nwachukwu</div>
-                  <div class="client-email">grace@email.com</div>
-                </div>
-              </div>
-            </td>
-            <td>Holistic Nutrition</td>
-            <td>Feb 1, 2026</td>
-            <td>₦24,000</td>
-            <td><span class="payment-pill overdue">Overdue</span></td>
-          </tr>
-          <tr>
-            <td>
-              <div class="client-row-inner">
-                <div class="client-avatar-sm" style="background:linear-gradient(135deg,#6B5B95,#4A3D6B)">MO</div>
-                <div>
-                  <div class="client-name">Musa Okonkwo</div>
-                  <div class="client-email">musa@email.com</div>
-                </div>
-              </div>
-            </td>
-            <td>Emotional Resilience</td>
-            <td>Feb 18, 2026</td>
-            <td>₦15,000</td>
-            <td><span class="payment-pill paid">Paid</span></td>
-          </tr>
-          <tr>
-            <td>
-              <div class="client-row-inner">
-                <div class="client-avatar-sm" style="background:linear-gradient(135deg,#2D7D9A,#1A5269)">SF</div>
-                <div>
-                  <div class="client-name">Sade Fashola</div>
-                  <div class="client-email">sade@email.com</div>
-                </div>
-              </div>
-            </td>
-            <td>Mind-Body Reset</td>
-            <td>Feb 20, 2026</td>
-            <td>₦20,000</td>
-            <td><span class="payment-pill paid">Paid</span></td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="finance-content">
+        <div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Fetching invoices from Frappe...</div></div>
+      </div>
     </div>
-
   </div>
+
+  <!-- CLIENTS PAGE -->
+  <div class="page" id="page-clients">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">All Clients</div>
+          <div class="card-subtitle">Everyone enrolled with Boedirep</div>
+        </div>
+      </div>
+      <div id="clients-content">
+        <div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Fetching clients from Frappe...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPORT PAGE -->
+  <div class="page" id="page-support">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Support Tickets</div>
+          <div class="card-subtitle">All client support requests</div>
+        </div>
+      </div>
+      <div id="support-content">
+        <div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Fetching tickets from Frappe...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HR PAGE -->
+  <div class="page" id="page-hr">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Staff & Coaches</div>
+          <div class="card-subtitle">All employees and coaches</div>
+        </div>
+      </div>
+      <div id="hr-content">
+        <div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Fetching staff from Frappe...</div></div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-  // Currency toggle
-  const rates = { NGN: { symbol: '₦', rev: '1.24M' }, USD: { symbol: '$', rev: '824' } };
-  let curr = 'NGN';
+// ============================================================
+// CONFIGURATION — Replace with real credentials
+// ============================================================
+const CONFIG = {
+  site_url: "https://boedirep.jh.frappe.cloud",
+  api_key: "8efad55bcd23082",
+  api_secret: "809abef2d2111d0",
+  client_name: "Boedirep",
+  currency: "₦"
+};
+// ============================================================
 
-  function setCurr(btn, c) {
-    curr = c;
-    document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('curr-symbol').textContent = rates[c].symbol;
-    document.getElementById('rev-val').textContent = rates[c].rev;
+// Check if credentials are set
+const credsMissing = CONFIG.api_key === "PASTE_API_KEY_HERE";
+if (credsMissing) {
+  document.getElementById('setup-notice').style.display = 'flex';
+}
+
+// Set date in topbar
+const now = new Date();
+document.getElementById('page-date').textContent = now.toLocaleDateString('en-NG', {
+  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+});
+
+// ============================================================
+// API HELPER
+// ============================================================
+async function frappeAPI(endpoint, params = {}) {
+  const url = new URL(`${CONFIG.site_url}/api/resource/${endpoint}`);
+  const defaultParams = {
+    limit_page_length: 50,
+    ...params
+  };
+  Object.entries(defaultParams).forEach(([k, v]) => {
+    if (typeof v === 'object') {
+      url.searchParams.append(k, JSON.stringify(v));
+    } else {
+      url.searchParams.append(k, v);
+    }
+  });
+
+  const headers = {
+    'Authorization': `token ${CONFIG.api_key}:${CONFIG.api_secret}`,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+
+  try {
+    const response = await fetch(url.toString(), { headers, mode: 'cors' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    return data.data || [];
+  } catch (err) {
+    console.error('Frappe API error:', endpoint, err);
+    throw err;
   }
+}
 
-  // Highlight today's date
-  const greeting = document.querySelector('.topbar-left h1');
-  const hour = new Date().getHours();
-  const timeOfDay = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
-  greeting.textContent = `Good ${timeOfDay}, Boedirep 🌿`;
-</script>
-  <script src="../../clients/boedirep/config.js"></script>
-<script>
-// Apply client config to dashboard
-document.title = OBXSERVER_CONFIG.client.name + " — Dashboard";
-document.querySelector('.brand-name').textContent = OBXSERVER_CONFIG.client.name;
-document.querySelector('.brand-tag').textContent = OBXSERVER_CONFIG.client.tagline;
-document.querySelector('.brand-logo').textContent = OBXSERVER_CONFIG.client.logo_initial;
-document.documentElement.style.setProperty('--sage', OBXSERVER_CONFIG.client.primary_color);
-document.documentElement.style.setProperty('--gold', OBXSERVER_CONFIG.client.accent_color);
+// ============================================================
+// CONNECTION TEST
+// ============================================================
+async function testConnection() {
+  const el = document.getElementById('conn-status');
+  const txt = document.getElementById('conn-text');
+  if (credsMissing) {
+    el.className = 'conn-status disconnected';
+    txt.textContent = 'No credentials';
+    return false;
+  }
+  try {
+    await frappeAPI('Customer', { limit_page_length: 1 });
+    el.className = 'conn-status connected';
+    txt.textContent = 'Live — Frappe Connected';
+    return true;
+  } catch {
+    el.className = 'conn-status disconnected';
+    txt.textContent = 'Connection failed';
+    return false;
+  }
+}
+
+// ============================================================
+// FORMAT HELPERS
+// ============================================================
+function formatMoney(amount) {
+  if (!amount) return `${CONFIG.currency}0`;
+  return `${CONFIG.currency}${Number(amount).toLocaleString('en-NG', { maximumFractionDigits: 0 })}`;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  return new Date(dateStr).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function statusPill(status) {
+  const map = {
+    'Paid': 'paid', 'Unpaid': 'unpaid', 'Overdue': 'overdue',
+    'Draft': 'draft', 'Open': 'open', 'Resolved': 'resolved',
+    'Replied': 'replied', 'Active': 'active-emp'
+  };
+  const cls = map[status] || 'draft';
+  return `<span class="pill ${cls}">${status}</span>`;
+}
+
+function emptyState(icon, message) {
+  return `<div class="empty-state"><div class="empty-icon">${icon}</div>${message}</div>`;
+}
+
+function errorState(message) {
+  return `<div class="error-box">⚠️ ${message}<br><small>Check your API credentials and CORS settings in Frappe.</small></div>`;
+}
+
+// ============================================================
+// LOAD DASHBOARD STATS
+// ============================================================
+async function loadDashboardStats() {
+  try {
+    // Customers count
+    const customers = await frappeAPI('Customer', {
+      fields: JSON.stringify(['name']),
+      limit_page_length: 500
+    });
+    document.getElementById('stat-clients').textContent = customers.length;
+    document.getElementById('stat-clients-sub').textContent = `Total enrolled clients`;
+
+    // Invoices
+    const invoices = await frappeAPI('Sales Invoice', {
+      fields: JSON.stringify(['name', 'grand_total', 'status', 'outstanding_amount']),
+      limit_page_length: 500
+    });
+    const totalRevenue = invoices.reduce((sum, inv) => sum + (inv.grand_total || 0), 0);
+    const unpaidInvoices = invoices.filter(inv => inv.status === 'Unpaid' || inv.outstanding_amount > 0);
+    document.getElementById('stat-revenue').textContent = formatMoney(totalRevenue);
+    document.getElementById('stat-revenue-sub').textContent = `From ${invoices.length} invoices`;
+    document.getElementById('stat-unpaid').textContent = unpaidInvoices.length;
+    document.getElementById('stat-unpaid-sub').textContent = `Awaiting payment`;
+
+    // Tickets
+    try {
+      const tickets = await frappeAPI('HD Ticket', {
+        fields: JSON.stringify(['name', 'status']),
+        filters: JSON.stringify([['status', '!=', 'Resolved']]),
+        limit_page_length: 100
+      });
+      document.getElementById('stat-tickets').textContent = tickets.length;
+      document.getElementById('stat-tickets-sub').textContent = `Open support tickets`;
+      document.getElementById('ticket-badge').textContent = tickets.length;
+    } catch {
+      document.getElementById('stat-tickets').textContent = '—';
+      document.getElementById('stat-tickets-sub').textContent = 'Helpdesk not configured';
+      document.getElementById('ticket-badge').textContent = '0';
+    }
+
+  } catch (err) {
+    console.error('Stats load error:', err);
+  }
+}
+
+// ============================================================
+// LOAD RECENT INVOICES (Dashboard widget)
+// ============================================================
+async function loadDashInvoices() {
+  const el = document.getElementById('dash-invoices');
+  try {
+    const invoices = await frappeAPI('Sales Invoice', {
+      fields: JSON.stringify(['name', 'customer', 'grand_total', 'status', 'posting_date']),
+      limit_page_length: 5,
+      order_by: 'posting_date desc'
+    });
+    if (!invoices.length) {
+      el.innerHTML = emptyState('📄', 'No invoices yet. Create your first invoice in Frappe.');
+      return;
+    }
+    el.innerHTML = `<table class="data-table">
+      <thead><tr><th>Client</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>${invoices.map(inv => `
+        <tr>
+          <td>${inv.customer || '—'}</td>
+          <td>${formatMoney(inv.grand_total)}</td>
+          <td>${formatDate(inv.posting_date)}</td>
+          <td>${statusPill(inv.status)}</td>
+        </tr>`).join('')}
+      </tbody></table>`;
+  } catch {
+    el.innerHTML = errorState('Could not load invoices');
+  }
+}
+
+// ============================================================
+// LOAD RECENT CLIENTS (Dashboard widget)
+// ============================================================
+async function loadDashClients() {
+  const el = document.getElementById('dash-clients');
+  try {
+    const customers = await frappeAPI('Customer', {
+      fields: JSON.stringify(['name', 'customer_name', 'creation', 'mobile_no']),
+      limit_page_length: 5,
+      order_by: 'creation desc'
+    });
+    if (!customers.length) {
+      el.innerHTML = emptyState('👥', 'No clients yet. Add your first client in Frappe.');
+      return;
+    }
+    el.innerHTML = `<table class="data-table">
+      <thead><tr><th>Name</th><th>Phone</th><th>Joined</th></tr></thead>
+      <tbody>${customers.map(c => `
+        <tr>
+          <td><strong>${c.customer_name || c.name}</strong></td>
+          <td>${c.mobile_no || '—'}</td>
+          <td>${formatDate(c.creation)}</td>
+        </tr>`).join('')}
+      </tbody></table>`;
+  } catch {
+    el.innerHTML = errorState('Could not load clients');
+  }
+}
+
+// ============================================================
+// LOAD FULL FINANCE PAGE
+// ============================================================
+async function loadFinance() {
+  const el = document.getElementById('finance-content');
+  try {
+    const invoices = await frappeAPI('Sales Invoice', {
+      fields: JSON.stringify(['name', 'customer', 'grand_total', 'outstanding_amount', 'status', 'posting_date', 'due_date']),
+      limit_page_length: 50,
+      order_by: 'posting_date desc'
+    });
+    if (!invoices.length) {
+      el.innerHTML = emptyState('💰', 'No invoices yet. Create your first invoice inside Frappe to see it here.');
+      return;
+    }
+    const totalInvoiced = invoices.reduce((s, i) => s + (i.grand_total || 0), 0);
+    const totalOutstanding = invoices.reduce((s, i) => s + (i.outstanding_amount || 0), 0);
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding:1.5rem;border-bottom:1px solid var(--cream2);">
+        <div style="text-align:center;">
+          <div style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">Total Invoiced</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--sage)">${formatMoney(totalInvoiced)}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">Outstanding</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--red)">${formatMoney(totalOutstanding)}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:0.7rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">Total Invoices</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;">${invoices.length}</div>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Invoice</th><th>Client</th><th>Amount</th><th>Outstanding</th><th>Date</th><th>Due</th><th>Status</th></tr></thead>
+        <tbody>${invoices.map(inv => `
+          <tr>
+            <td style="font-weight:600;color:var(--sage)">${inv.name}</td>
+            <td>${inv.customer || '—'}</td>
+            <td>${formatMoney(inv.grand_total)}</td>
+            <td style="color:${inv.outstanding_amount > 0 ? 'var(--red)' : 'var(--sage)'}">${formatMoney(inv.outstanding_amount)}</td>
+            <td>${formatDate(inv.posting_date)}</td>
+            <td>${formatDate(inv.due_date)}</td>
+            <td>${statusPill(inv.status)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch (err) {
+    el.innerHTML = errorState('Could not load invoices from Frappe. Check API credentials and CORS settings.');
+  }
+}
+
+// ============================================================
+// LOAD FULL CLIENTS PAGE
+// ============================================================
+async function loadClients() {
+  const el = document.getElementById('clients-content');
+  try {
+    const customers = await frappeAPI('Customer', {
+      fields: JSON.stringify(['name', 'customer_name', 'mobile_no', 'email_id', 'creation', 'customer_group']),
+      limit_page_length: 50,
+      order_by: 'creation desc'
+    });
+    if (!customers.length) {
+      el.innerHTML = emptyState('👥', 'No clients yet. Add clients in Frappe under Selling → Customer.');
+      return;
+    }
+    el.innerHTML = `
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Group</th><th>Joined</th></tr></thead>
+        <tbody>${customers.map(c => `
+          <tr>
+            <td><strong>${c.customer_name || c.name}</strong></td>
+            <td style="color:var(--text-dim)">${c.email_id || '—'}</td>
+            <td>${c.mobile_no || '—'}</td>
+            <td>${c.customer_group || '—'}</td>
+            <td>${formatDate(c.creation)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch {
+    el.innerHTML = errorState('Could not load clients from Frappe.');
+  }
+}
+
+// ============================================================
+// LOAD SUPPORT PAGE
+// ============================================================
+async function loadSupport() {
+  const el = document.getElementById('support-content');
+  try {
+    const tickets = await frappeAPI('HD Ticket', {
+      fields: JSON.stringify(['name', 'subject', 'status', 'priority', 'raised_by', 'creation', 'modified']),
+      limit_page_length: 50,
+      order_by: 'creation desc'
+    });
+    if (!tickets.length) {
+      el.innerHTML = emptyState('🎧', 'No support tickets yet. Tickets from clients will appear here.');
+      return;
+    }
+    el.innerHTML = `
+      <table class="data-table">
+        <thead><tr><th>Ticket</th><th>Subject</th><th>Raised By</th><th>Priority</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>${tickets.map(t => `
+          <tr>
+            <td style="font-weight:600;color:var(--sage)">${t.name}</td>
+            <td>${t.subject || '—'}</td>
+            <td style="color:var(--text-dim)">${t.raised_by || '—'}</td>
+            <td>${t.priority || '—'}</td>
+            <td>${statusPill(t.status)}</td>
+            <td>${formatDate(t.creation)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch {
+    el.innerHTML = emptyState('🎧', 'Helpdesk module not yet configured. Install Frappe Helpdesk and create your first ticket.');
+  }
+}
+
+// ============================================================
+// LOAD HR PAGE
+// ============================================================
+async function loadHR() {
+  const el = document.getElementById('hr-content');
+  try {
+    const employees = await frappeAPI('Employee', {
+      fields: JSON.stringify(['name', 'employee_name', 'designation', 'department', 'date_of_joining', 'status', 'cell_number']),
+      limit_page_length: 50,
+      order_by: 'date_of_joining desc'
+    });
+    if (!employees.length) {
+      el.innerHTML = emptyState('👤', 'No staff added yet. Add employees in Frappe under HR → Employee.');
+      return;
+    }
+    el.innerHTML = `
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Role</th><th>Department</th><th>Phone</th><th>Joined</th><th>Status</th></tr></thead>
+        <tbody>${employees.map(e => `
+          <tr>
+            <td><strong>${e.employee_name || e.name}</strong></td>
+            <td>${e.designation || '—'}</td>
+            <td>${e.department || '—'}</td>
+            <td>${e.cell_number || '—'}</td>
+            <td>${formatDate(e.date_of_joining)}</td>
+            <td>${statusPill(e.status || 'Active')}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  } catch {
+    el.innerHTML = errorState('Could not load staff from Frappe. Make sure Frappe HR is installed.');
+  }
+}
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+const pageTitles = {
+  dashboard: 'Dashboard',
+  finance: 'Finance & Invoices',
+  clients: 'Clients',
+  support: 'Support Tickets',
+  hr: 'HR & Staff'
+};
+
+const pageLoaders = {
+  finance: loadFinance,
+  clients: loadClients,
+  support: loadSupport,
+  hr: loadHR
+};
+
+const loadedPages = new Set();
+
+function showPage(pageId) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  // Show selected
+  document.getElementById(`page-${pageId}`).classList.add('active');
+  document.querySelector(`[onclick="showPage('${pageId}')"]`).classList.add('active');
+  document.getElementById('page-title').textContent = pageTitles[pageId];
+
+  // Load data if not already loaded
+  if (pageLoaders[pageId] && !loadedPages.has(pageId)) {
+    loadedPages.add(pageId);
+    pageLoaders[pageId]();
+  }
+}
+
+// ============================================================
+// INITIALISE
+// ============================================================
+async function init() {
+  const connected = await testConnection();
+  if (connected) {
+    loadDashboardStats();
+    loadDashInvoices();
+    loadDashClients();
+  } else if (credsMissing) {
+    // Show empty states with instructions
+    document.getElementById('stat-clients').textContent = '—';
+    document.getElementById('stat-revenue').textContent = '—';
+    document.getElementById('stat-unpaid').textContent = '—';
+    document.getElementById('stat-tickets').textContent = '—';
+    document.getElementById('dash-invoices').innerHTML = emptyState('🔑', 'Add API credentials to see live data');
+    document.getElementById('dash-clients').innerHTML = emptyState('🔑', 'Add API credentials to see live data');
+  }
+}
+
+init();
 </script>
 </body>
 </html>
