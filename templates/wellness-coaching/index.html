@@ -455,7 +455,77 @@
   .page-btn.active { background: var(--sage); color: white; border-color: var(--sage); font-weight: 700; }
   .page-info { font-size: 0.75rem; color: var(--text-faint); margin: 0 0.5rem; }
 
-  /* ─── RESPONSIVE ─── */
+  .notif-btn {
+    width: 38px; height: 38px; border-radius: 9px;
+    background: var(--cream2); border: 1px solid var(--cream3);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem; position: relative; flex-shrink: 0;
+    user-select: none;
+  }
+  .notif-dot {
+    position: absolute; top: 7px; right: 7px;
+    width: 7px; height: 7px; background: var(--gold);
+    border-radius: 50%; border: 1.5px solid white;
+    display: none;
+  }
+  .notif-dot.show { display: block; }
+  .notif-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); right: 0;
+    width: 300px; background: var(--white); border: 1px solid var(--cream3);
+    border-radius: 12px; box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    z-index: 200; overflow: hidden;
+  }
+  .notif-dropdown.open { display: block; }
+  .notif-header {
+    padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--cream2);
+    font-size: 0.82rem; font-weight: 700; color: var(--text);
+  }
+  .notif-item {
+    padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--cream2);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .notif-item:last-child { border-bottom: none; }
+  .notif-item:hover { background: var(--cream); }
+  .notif-item-title { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+  .notif-item-sub { font-size: 0.73rem; color: var(--text-faint); }
+
+  /* ─── ROW ACTIONS ─── */
+  .row-actions { display: flex; gap: 0.35rem; align-items: center; }
+  .action-btn {
+    padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.72rem;
+    font-weight: 600; cursor: pointer; border: 1px solid transparent;
+    font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .action-btn.view { background: var(--sage-faint); color: var(--sage); border-color: var(--sage-border); }
+  .action-btn.view:hover { background: var(--sage); color: white; }
+  .action-btn.edit { background: rgba(196,148,42,0.08); color: var(--gold); border-color: rgba(196,148,42,0.2); }
+  .action-btn.edit:hover { background: var(--gold); color: white; }
+  .action-btn.del { background: rgba(192,57,43,0.07); color: var(--red); border-color: rgba(192,57,43,0.15); }
+  .action-btn.del:hover { background: var(--red); color: white; }
+  .action-btn.convert { background: rgba(45,125,154,0.08); color: var(--blue); border-color: rgba(45,125,154,0.2); }
+  .action-btn.convert:hover { background: var(--blue); color: white; }
+
+  /* ─── VIEW/DETAIL MODAL ─── */
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .detail-item {
+    padding: 0.75rem 0; border-bottom: 1px solid var(--cream2);
+    display: flex; flex-direction: column; gap: 0.2rem;
+  }
+  .detail-item.full { grid-column: 1 / -1; }
+  .detail-item:nth-last-child(-n+2) { border-bottom: none; }
+  .detail-key { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); }
+  .detail-val { font-size: 0.875rem; color: var(--text); font-weight: 500; }
+  .modal-wide { width: 700px; }
+
+  /* ─── COMING SOON PAGES ─── */
+  .coming-soon {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 5rem 2rem; text-align: center; color: var(--text-faint);
+  }
+  .coming-soon-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+  .coming-soon h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .coming-soon p { font-size: 0.875rem; max-width: 320px; line-height: 1.6; }
   @media (max-width: 1100px) {
     .stats-row { grid-template-columns: repeat(2, 1fr); }
     .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -494,30 +564,39 @@
       <button class="nav-item active" data-page="dashboard">
         <span class="nav-icon">⬡</span> Dashboard
       </button>
+      <button class="nav-item" data-page="analytics">
+        <span class="nav-icon">📊</span> Analytics
+      </button>
     </div>
     <div class="nav-section">
-      <div class="nav-section-label">CRM</div>
+      <div class="nav-section-label">Programs</div>
+      <button class="nav-item" data-page="programs">
+        <span class="nav-icon">🌿</span> All Programs
+      </button>
+      <button class="nav-item" data-page="sessions">
+        <span class="nav-icon">📅</span> Sessions
+      </button>
+      <button class="nav-item" data-page="participants">
+        <span class="nav-icon">👥</span> Participants
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Business</div>
+      <button class="nav-item" data-page="invoices">
+        <span class="nav-icon">💰</span> Finance
+      </button>
       <button class="nav-item" data-page="leads">
-        <span class="nav-icon">🔁</span> Leads
+        <span class="nav-icon">🔁</span> CRM & Leads
       </button>
       <button class="nav-item" data-page="customers">
-        <span class="nav-icon">👥</span> Customers
-      </button>
-    </div>
-    <div class="nav-section">
-      <div class="nav-section-label">Finance</div>
-      <button class="nav-item" data-page="invoices">
-        <span class="nav-icon">💰</span> Invoices
-      </button>
-    </div>
-    <div class="nav-section">
-      <div class="nav-section-label">Operations</div>
-      <button class="nav-item" data-page="support">
-        <span class="nav-icon">🎧</span> Support
-        <span class="nav-badge" id="ticketBadge" style="display:none">0</span>
+        <span class="nav-icon">👤</span> Customers
       </button>
       <button class="nav-item" data-page="hr">
         <span class="nav-icon">👤</span> HR & Staff
+      </button>
+      <button class="nav-item" data-page="support">
+        <span class="nav-icon">🎧</span> Support
+        <span class="nav-badge" id="ticketBadge" style="display:none">0</span>
       </button>
     </div>
   </nav>
@@ -549,12 +628,25 @@
         <p id="pageSubheading">Here's what's happening today</p>
       </div>
     </div>
-    <div class="topbar-right">
-      <div class="currency-toggle" id="currToggle" style="display:none">
-        <button class="curr-btn active" onclick="setCurr(this,'IDR')">IDR</button>
-        <button class="curr-btn" onclick="setCurr(this,'USD')">USD</button>
+    <div class="topbar-right" id="topbarRight">
+      <!-- Dashboard-specific actions shown by default, others shown per page -->
+      <div id="dashboardActions" style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="currency-toggle">
+          <button class="curr-btn active" onclick="setCurr(this,'NGN')">NGN</button>
+          <button class="curr-btn" onclick="setCurr(this,'USD')">USD</button>
+        </div>
+        <button class="topbar-btn" onclick="alert('New Program — coming soon')">+ New Program</button>
+        <button class="topbar-btn primary" onclick="openModal('modalInvoice')">+ Invoice</button>
+        <div class="notif-btn" onclick="toggleNotifDropdown()">
+          🔔
+          <div class="notif-dot" id="notifDot"></div>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">Notifications</div>
+            <div id="notifList"><div style="padding:1rem;text-align:center;color:var(--text-faint);font-size:0.82rem;">Loading…</div></div>
+          </div>
+        </div>
       </div>
-      <div id="topbarActions"></div>
+      <div id="pageActions"></div>
     </div>
   </header>
 
@@ -722,11 +814,11 @@
             <thead>
               <tr>
                 <th>Name</th><th>Company</th><th>Contact</th>
-                <th>Status</th><th>Qualification</th><th>Source</th><th>Owner</th>
+                <th>Status</th><th>Qualification</th><th>Source</th><th>Owner</th><th>Actions</th>
               </tr>
             </thead>
             <tbody id="leadsBody">
-              <tr class="loading-row"><td colspan="7">Loading leads…</td></tr>
+              <tr class="loading-row"><td colspan="8">Loading leads…</td></tr>
             </tbody>
           </table>
         </div>
@@ -759,11 +851,11 @@
             <thead>
               <tr>
                 <th>Name</th><th>Type</th><th>Group</th><th>Territory</th>
-                <th>Contact</th><th>Account Manager</th><th>Status</th>
+                <th>Contact</th><th>Account Manager</th><th>Status</th><th>Actions</th>
               </tr>
             </thead>
             <tbody id="customersBody">
-              <tr class="loading-row"><td colspan="7">Loading customers…</td></tr>
+              <tr class="loading-row"><td colspan="8">Loading customers…</td></tr>
             </tbody>
           </table>
         </div>
@@ -791,10 +883,10 @@
         <div class="table-wrap">
           <table class="data-table">
             <thead>
-              <tr><th>Invoice #</th><th>Customer</th><th>Date</th><th>Due Date</th><th>Amount</th><th>Status</th></tr>
+              <tr><th>Invoice #</th><th>Customer</th><th>Date</th><th>Due Date</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
             </thead>
             <tbody id="invoicesBody">
-              <tr class="loading-row"><td colspan="6">Loading invoices…</td></tr>
+              <tr class="loading-row"><td colspan="7">Loading invoices…</td></tr>
             </tbody>
           </table>
         </div>
@@ -864,6 +956,42 @@
         </div>
         <div id="hrPagination"></div>
       </div>
+    </div>
+
+    <!-- ══════ ANALYTICS PAGE ══════ -->
+    <div class="page" id="page-analytics">
+      <div class="card"><div class="coming-soon">
+        <div class="coming-soon-icon">📊</div>
+        <h3>Analytics</h3>
+        <p>Program performance, revenue trends, and participant retention analytics — coming soon.</p>
+      </div></div>
+    </div>
+
+    <!-- ══════ PROGRAMS PAGE ══════ -->
+    <div class="page" id="page-programs">
+      <div class="card"><div class="coming-soon">
+        <div class="coming-soon-icon">🌿</div>
+        <h3>All Programs</h3>
+        <p>Manage your wellness programs for diabetes patients — cohorts, schedules, and capacity. Coming soon.</p>
+      </div></div>
+    </div>
+
+    <!-- ══════ SESSIONS PAGE ══════ -->
+    <div class="page" id="page-sessions">
+      <div class="card"><div class="coming-soon">
+        <div class="coming-soon-icon">📅</div>
+        <h3>Sessions</h3>
+        <p>Track individual coaching and group sessions, attendance, and session notes. Coming soon.</p>
+      </div></div>
+    </div>
+
+    <!-- ══════ PARTICIPANTS PAGE ══════ -->
+    <div class="page" id="page-participants">
+      <div class="card"><div class="coming-soon">
+        <div class="coming-soon-icon">👥</div>
+        <h3>Participants</h3>
+        <p>Enrolled members, health progress tracking, and program participation history. Coming soon.</p>
+      </div></div>
     </div>
 
   </div><!-- /content -->
@@ -981,7 +1109,168 @@
   </div>
 </div>
 
-<!-- TOAST -->
+<!-- VIEW LEAD MODAL -->
+<div class="modal-overlay" id="modalViewLead">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <span class="modal-title" id="viewLeadTitle">Lead Details</span>
+      <button class="modal-close" onclick="closeModal('modalViewLead')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--cream3);">
+        <div class="avatar-circle" style="width:52px;height:52px;font-size:1.2rem;" id="viewLeadAvatar">?</div>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;" id="viewLeadName">—</div>
+          <div style="font-size:0.82rem;color:var(--text-faint);margin-top:0.2rem;" id="viewLeadJob">—</div>
+          <div style="margin-top:0.4rem;" id="viewLeadStatusBadge"></div>
+        </div>
+      </div>
+      <div class="detail-grid" id="viewLeadDetails"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalViewLead')">Close</button>
+      <button class="topbar-btn" style="background:rgba(196,148,42,0.1);color:var(--gold);border-color:rgba(196,148,42,0.3);" onclick="openEditLeadFromView()">✏️ Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT LEAD MODAL -->
+<div class="modal-overlay" id="modalEditLead">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit Lead</span>
+      <button class="modal-close" onclick="closeModal('modalEditLead')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="el_name">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" id="el_first_name"></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" id="el_last_name"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="el_email_id"></div>
+        <div class="form-group"><label class="form-label">Mobile No</label><input class="form-input" type="tel" id="el_mobile_no"></div>
+        <div class="form-group"><label class="form-label">WhatsApp</label><input class="form-input" type="tel" id="el_whatsapp_no"></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" id="el_phone"></div>
+        <div class="form-group"><label class="form-label">Organization</label><input class="form-input" type="text" id="el_company_name"></div>
+        <div class="form-group"><label class="form-label">Job Title</label><input class="form-input" type="text" id="el_job_title"></div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-input" id="el_status">
+            <option>Lead</option><option>Open</option><option>Replied</option>
+            <option>Opportunity</option><option>Interested</option><option>Converted</option>
+            <option>Lost Quotation</option><option>Do Not Contact</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Lead Type</label>
+          <select class="form-input" id="el_type">
+            <option value="">— Select —</option><option>Client</option><option>Channel Partner</option><option>Consultant</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Qualification</label>
+          <select class="form-input" id="el_qualification_status">
+            <option>Unqualified</option><option>In Process</option><option>Qualified</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">City</label><input class="form-input" type="text" id="el_city"></div>
+        <div class="form-group"><label class="form-label">Country</label><input class="form-input" type="text" id="el_country"></div>
+        <div class="form-group"><label class="form-label">Website</label><input class="form-input" type="text" id="el_website"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalEditLead')">Cancel</button>
+      <button class="topbar-btn primary" onclick="updateLead()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW CUSTOMER MODAL -->
+<div class="modal-overlay" id="modalViewCustomer">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <span class="modal-title">Customer Details</span>
+      <button class="modal-close" onclick="closeModal('modalViewCustomer')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--cream3);">
+        <div class="avatar-circle" style="width:52px;height:52px;font-size:1.2rem;background:linear-gradient(135deg,#2D7D9A,#1A5269);" id="viewCustAvatar">?</div>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;" id="viewCustName">—</div>
+          <div style="font-size:0.82rem;color:var(--text-faint);margin-top:0.2rem;" id="viewCustGroup">—</div>
+          <div style="margin-top:0.4rem;" id="viewCustTypeBadge"></div>
+        </div>
+      </div>
+      <div class="detail-grid" id="viewCustDetails"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalViewCustomer')">Close</button>
+      <button class="topbar-btn" style="background:rgba(196,148,42,0.1);color:var(--gold);border-color:rgba(196,148,42,0.3);" onclick="openEditCustFromView()">✏️ Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT CUSTOMER MODAL -->
+<div class="modal-overlay" id="modalEditCustomer">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Edit Customer</span>
+      <button class="modal-close" onclick="closeModal('modalEditCustomer')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="ec_name">
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Customer Name *</label><input class="form-input" type="text" id="ec_customer_name"></div>
+        <div class="form-group"><label class="form-label">Customer Type</label>
+          <select class="form-input" id="ec_customer_type"><option>Company</option><option>Individual</option><option>Partnership</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Customer Group</label><input class="form-input" type="text" id="ec_customer_group"></div>
+        <div class="form-group"><label class="form-label">Territory</label><input class="form-input" type="text" id="ec_territory"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="ec_email_id"></div>
+        <div class="form-group"><label class="form-label">Mobile No</label><input class="form-input" type="tel" id="ec_mobile_no"></div>
+        <div class="form-group"><label class="form-label">Account Manager</label><input class="form-input" type="text" id="ec_account_manager"></div>
+        <div class="form-group"><label class="form-label">Website</label><input class="form-input" type="text" id="ec_website"></div>
+        <div class="form-group"><label class="form-label">Industry</label><input class="form-input" type="text" id="ec_industry"></div>
+        <div class="form-group"><label class="form-label">Market Segment</label><input class="form-input" type="text" id="ec_market_segment"></div>
+        <div class="form-group full"><label class="form-label">Notes</label><textarea class="form-input" id="ec_customer_details"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalEditCustomer')">Cancel</button>
+      <button class="topbar-btn primary" onclick="updateCustomer()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW INVOICE MODAL -->
+<div class="modal-overlay" id="modalViewInvoice">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="viewInvTitle">Invoice</span>
+      <button class="modal-close" onclick="closeModal('modalViewInvoice')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="viewInvDetails"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalViewInvoice')">Close</button>
+      <button class="topbar-btn" style="background:var(--sage-faint);color:var(--sage);border-color:var(--sage-border);" id="viewInvFrappeLink" onclick="">↗ Open in Frappe</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="modal-overlay" id="modalConfirmDelete">
+  <div class="modal" style="width:420px;">
+    <div class="modal-header">
+      <span class="modal-title">Confirm Delete</span>
+      <button class="modal-close" onclick="closeModal('modalConfirmDelete')">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9rem;color:var(--text-dim);line-height:1.6;" id="deleteConfirmMsg">Are you sure you want to delete this record? This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalConfirmDelete')">Cancel</button>
+      <button class="topbar-btn" style="background:var(--red);color:white;border-color:var(--red);" id="deleteConfirmBtn">Delete</button>
+    </div>
+  </div>
+</div>
 <div id="toast"></div>
 
 <script>
@@ -1049,24 +1338,38 @@ async function checkConnection() {
 //  NAVIGATION
 // ════════════════════════════════════════════════
 const PAGE_TITLES = {
-  dashboard: ['Good morning, Boedirep 🌿', 'Here\'s what\'s happening today'],
-  leads:     ['Leads', 'Manage your CRM pipeline'],
-  customers: ['Customers', 'All active and inactive clients'],
-  invoices:  ['Invoices', 'Finance & billing overview'],
-  support:   ['Support Tickets', 'Open client support requests'],
-  hr:        ['HR & Staff', 'Team and employee management'],
+  dashboard:    ['Good morning, Boedirep 🌿', 'Here\'s what\'s happening today'],
+  analytics:    ['Analytics', 'Program performance and revenue trends'],
+  programs:     ['All Programs', 'Active and upcoming wellness cohorts'],
+  sessions:     ['Sessions', 'Coaching and group session schedule'],
+  participants: ['Participants', 'Enrolled members and progress tracking'],
+  leads:        ['CRM & Leads', 'Manage your sales pipeline'],
+  customers:    ['Customers', 'All active and inactive clients'],
+  invoices:     ['Finance', 'Invoices and billing overview'],
+  support:      ['Support Tickets', 'Open client support requests'],
+  hr:           ['HR & Staff', 'Team and employee management'],
 };
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  document.getElementById('page-' + page)?.classList.add('active');
+  document.querySelector(`[data-page="${page}"]`)?.classList.add('active');
 
   const [h, s] = PAGE_TITLES[page] || [page, ''];
-  document.getElementById('pageHeading').textContent    = h;
+  // On dashboard, show time-based greeting
+  if (page === 'dashboard') {
+    const hour = new Date().getHours();
+    const tod = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+    document.getElementById('pageHeading').textContent = `Good ${tod}, Boedirep 🌿`;
+  } else {
+    document.getElementById('pageHeading').textContent = h;
+  }
   document.getElementById('pageSubheading').textContent = s;
   document.getElementById('sidebar').classList.remove('open');
+
+  // Show/hide dashboard topbar actions
+  document.getElementById('dashboardActions').style.display = page === 'dashboard' ? 'flex' : 'none';
 
   if (!loaded.has(page)) { loaded.add(page); loadPage(page); }
 }
@@ -1079,11 +1382,12 @@ document.getElementById('hamburger').addEventListener('click', () => {
 });
 
 function loadPage(page) {
-  if (page === 'leads')     loadLeads();
-  else if (page === 'customers') loadCustomers();
-  else if (page === 'invoices')  loadInvoices();
-  else if (page === 'support')   loadTickets();
-  else if (page === 'hr')        loadHR();
+  if (page === 'leads')        loadLeads();
+  else if (page === 'customers')  loadCustomers();
+  else if (page === 'invoices')   loadInvoices();
+  else if (page === 'support')    loadTickets();
+  else if (page === 'hr')         loadHR();
+  // analytics, programs, sessions, participants are stub pages — nothing to load yet
 }
 
 // ════════════════════════════════════════════════
@@ -1172,6 +1476,7 @@ function renderLeads() {
     const name = l.lead_name || `${l.first_name||''} ${l.last_name||''}`.trim() || l.name;
     const initials = (name[0]||'?').toUpperCase();
     const contact = l.email_id || l.mobile_no || l.phone || '—';
+    const safeId = encodeURIComponent(l.name);
     return `<tr>
       <td><div class="cell-with-avatar">
         <div class="avatar-circle">${initials}</div>
@@ -1183,6 +1488,11 @@ function renderLeads() {
       <td>${qualBadge(l.qualification_status)}</td>
       <td>${l.utm_source||'—'}</td>
       <td class="cell-sub">${(l.lead_owner||'').split('@')[0]||'—'}</td>
+      <td><div class="row-actions">
+        <button class="action-btn view" onclick="viewLead('${safeId}')">View</button>
+        <button class="action-btn edit" onclick="editLead('${safeId}')">Edit</button>
+        <button class="action-btn del" onclick="confirmDelete('Lead','${safeId}','${name.replace(/'/g,"\\'")}')" >Delete</button>
+      </div></td>
     </tr>`;
   }).join('');
   renderPagination('leadPagination', page, Math.ceil(filtered.length/PER_PAGE), 'setLeadPage');
@@ -1294,7 +1604,9 @@ function renderCustomers() {
     document.getElementById('customerPagination').innerHTML = '';
     return;
   }
-  tbody.innerHTML = getPage(filtered, page).map(c => `
+  tbody.innerHTML = getPage(filtered, page).map(c => {
+    const safeId = encodeURIComponent(c.name);
+    return `
     <tr>
       <td><div class="cell-with-avatar">
         <div class="avatar-circle" style="background:linear-gradient(135deg,#2D7D9A,#1A5269)">${(c.customer_name||'?')[0].toUpperCase()}</div>
@@ -1306,8 +1618,13 @@ function renderCustomers() {
       <td><div class="cell-main">${c.email_id||'—'}</div>${c.mobile_no?`<div class="cell-sub">${c.mobile_no}</div>`:''}</td>
       <td class="cell-sub">${(c.account_manager||'').split('@')[0]||'—'}</td>
       <td>${c.disabled ? badge('red','Disabled') : badge('green','Active')}</td>
+      <td><div class="row-actions">
+        <button class="action-btn view" onclick="viewCustomer('${safeId}')">View</button>
+        <button class="action-btn edit" onclick="editCustomer('${safeId}')">Edit</button>
+        <button class="action-btn del" onclick="confirmDelete('Customer','${safeId}','${(c.customer_name||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div></td>
     </tr>
-  `).join('');
+  `}).join('');
   renderPagination('customerPagination', page, Math.ceil(filtered.length/PER_PAGE), 'setCustPage');
 }
 
@@ -1399,6 +1716,7 @@ function renderInvoices() {
   tbody.innerHTML = getPage(filtered, page).map(inv => {
     const st = inv.status || statusMap[inv.docstatus] || 'Draft';
     const sc = {'Paid':'green','Overdue':'red','Submitted':'gold','Draft':'gray','Return':'red','Cancelled':'gray'}[st]||'gray';
+    const safeId = encodeURIComponent(inv.name);
     return `<tr>
       <td class="cell-main">${inv.name}</td>
       <td>${inv.customer||'—'}</td>
@@ -1406,6 +1724,10 @@ function renderInvoices() {
       <td>${inv.due_date||'—'}</td>
       <td class="cell-main">IDR ${(inv.grand_total||0).toLocaleString()}</td>
       <td>${badge(sc, st)}</td>
+      <td><div class="row-actions">
+        <button class="action-btn view" onclick="viewInvoice('${safeId}')">View</button>
+        <button class="action-btn convert" onclick="window.open('${SITE}/Sales Invoice/${inv.name}','_blank')">↗ Frappe</button>
+      </div></td>
     </tr>`;
   }).join('');
   renderPagination('invoicePagination', page, Math.ceil(filtered.length/PER_PAGE), 'setInvPage');
@@ -1600,7 +1922,261 @@ function showToast(msg, type = '') {
 }
 
 // ════════════════════════════════════════════════
-//  CURRENCY TOGGLE (dashboard stat cards)
+//  LEAD VIEW / EDIT / DELETE
+// ════════════════════════════════════════════════
+let _currentViewLead = null;
+
+function viewLead(safeId) {
+  const id = decodeURIComponent(safeId);
+  const l = S.leads.all.find(x => x.name === id);
+  if (!l) return;
+  _currentViewLead = l;
+  const name = l.lead_name || `${l.first_name||''} ${l.last_name||''}`.trim() || l.name;
+  document.getElementById('viewLeadTitle').textContent = name;
+  document.getElementById('viewLeadName').textContent = name;
+  document.getElementById('viewLeadJob').textContent = l.job_title || (l.company_name ? `at ${l.company_name}` : '—');
+  document.getElementById('viewLeadAvatar').textContent = (name[0]||'?').toUpperCase();
+  document.getElementById('viewLeadStatusBadge').innerHTML = leadStatusBadge(l.status) + ' ' + qualBadge(l.qualification_status);
+  const fields = [
+    ['Email', l.email_id], ['Mobile', l.mobile_no], ['WhatsApp', l.whatsapp_no], ['Phone', l.phone],
+    ['Company', l.company_name], ['Lead Type', l.type], ['Request Type', l.request_type],
+    ['Source', l.utm_source], ['Owner', l.lead_owner], ['City', l.city], ['Country', l.country],
+    ['Website', l.website], ['No. of Employees', l.no_of_employees], ['Created', (l.creation||'').split(' ')[0]],
+  ];
+  document.getElementById('viewLeadDetails').innerHTML = fields.map(([k,v]) =>
+    `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v||'—'}</div></div>`
+  ).join('');
+  openModal('modalViewLead');
+}
+
+function openEditLeadFromView() {
+  closeModal('modalViewLead');
+  if (_currentViewLead) editLead(encodeURIComponent(_currentViewLead.name));
+}
+
+function editLead(safeId) {
+  const id = decodeURIComponent(safeId);
+  const l = S.leads.all.find(x => x.name === id);
+  if (!l) return;
+  document.getElementById('el_name').value = l.name;
+  document.getElementById('el_first_name').value = l.first_name||'';
+  document.getElementById('el_last_name').value = l.last_name||'';
+  document.getElementById('el_email_id').value = l.email_id||'';
+  document.getElementById('el_mobile_no').value = l.mobile_no||'';
+  document.getElementById('el_whatsapp_no').value = l.whatsapp_no||'';
+  document.getElementById('el_phone').value = l.phone||'';
+  document.getElementById('el_company_name').value = l.company_name||'';
+  document.getElementById('el_job_title').value = l.job_title||'';
+  document.getElementById('el_status').value = l.status||'Lead';
+  document.getElementById('el_type').value = l.type||'';
+  document.getElementById('el_qualification_status').value = l.qualification_status||'Unqualified';
+  document.getElementById('el_city').value = l.city||'';
+  document.getElementById('el_country').value = l.country||'';
+  document.getElementById('el_website').value = l.website||'';
+  openModal('modalEditLead');
+}
+
+async function updateLead() {
+  const name = document.getElementById('el_name').value;
+  const body = {
+    first_name: document.getElementById('el_first_name').value.trim(),
+    last_name: document.getElementById('el_last_name').value.trim(),
+    email_id: document.getElementById('el_email_id').value.trim(),
+    mobile_no: document.getElementById('el_mobile_no').value.trim(),
+    whatsapp_no: document.getElementById('el_whatsapp_no').value.trim(),
+    phone: document.getElementById('el_phone').value.trim(),
+    company_name: document.getElementById('el_company_name').value.trim(),
+    job_title: document.getElementById('el_job_title').value.trim(),
+    status: document.getElementById('el_status').value,
+    type: document.getElementById('el_type').value,
+    qualification_status: document.getElementById('el_qualification_status').value,
+    city: document.getElementById('el_city').value.trim(),
+    country: document.getElementById('el_country').value.trim(),
+    website: document.getElementById('el_website').value.trim(),
+  };
+  try {
+    await apiPut(`/api/resource/Lead/${encodeURIComponent(name)}`, body);
+    showToast('Lead updated', 'success');
+    closeModal('modalEditLead');
+    loaded.delete('leads'); loadLeads();
+  } catch(e) { showToast('Error: ' + (e.message||'Update failed'), 'error'); }
+}
+
+// ════════════════════════════════════════════════
+//  CUSTOMER VIEW / EDIT / DELETE
+// ════════════════════════════════════════════════
+let _currentViewCust = null;
+
+function viewCustomer(safeId) {
+  const id = decodeURIComponent(safeId);
+  const c = S.customers.all.find(x => x.name === id);
+  if (!c) return;
+  _currentViewCust = c;
+  document.getElementById('viewCustAvatar').textContent = (c.customer_name||'?')[0].toUpperCase();
+  document.getElementById('viewCustName').textContent = c.customer_name||'—';
+  document.getElementById('viewCustGroup').textContent = [c.customer_group, c.territory].filter(Boolean).join(' · ') || '—';
+  document.getElementById('viewCustTypeBadge').innerHTML = custTypeBadge(c.customer_type) + (c.disabled ? ' ' + badge('red','Disabled') : ' ' + badge('green','Active'));
+  const fields = [
+    ['Email', c.email_id], ['Mobile', c.mobile_no], ['Account Manager', c.account_manager],
+    ['Territory', c.territory], ['Customer Group', c.customer_group], ['Industry', c.industry],
+    ['Market Segment', c.market_segment], ['Website', c.website], ['Currency', c.default_currency],
+    ['Created', (c.creation||'').split(' ')[0]],
+  ];
+  document.getElementById('viewCustDetails').innerHTML = fields.map(([k,v]) =>
+    `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v||'—'}</div></div>`
+  ).join('');
+  openModal('modalViewCustomer');
+}
+
+function openEditCustFromView() {
+  closeModal('modalViewCustomer');
+  if (_currentViewCust) editCustomer(encodeURIComponent(_currentViewCust.name));
+}
+
+function editCustomer(safeId) {
+  const id = decodeURIComponent(safeId);
+  const c = S.customers.all.find(x => x.name === id);
+  if (!c) return;
+  document.getElementById('ec_name').value = c.name;
+  document.getElementById('ec_customer_name').value = c.customer_name||'';
+  document.getElementById('ec_customer_type').value = c.customer_type||'Company';
+  document.getElementById('ec_customer_group').value = c.customer_group||'';
+  document.getElementById('ec_territory').value = c.territory||'';
+  document.getElementById('ec_email_id').value = c.email_id||'';
+  document.getElementById('ec_mobile_no').value = c.mobile_no||'';
+  document.getElementById('ec_account_manager').value = c.account_manager||'';
+  document.getElementById('ec_website').value = c.website||'';
+  document.getElementById('ec_industry').value = c.industry||'';
+  document.getElementById('ec_market_segment').value = c.market_segment||'';
+  document.getElementById('ec_customer_details').value = c.customer_details||'';
+  openModal('modalEditCustomer');
+}
+
+async function updateCustomer() {
+  const name = document.getElementById('ec_name').value;
+  if (!document.getElementById('ec_customer_name').value.trim()) return showToast('Customer name required', 'error');
+  const body = {
+    customer_name: document.getElementById('ec_customer_name').value.trim(),
+    customer_type: document.getElementById('ec_customer_type').value,
+    customer_group: document.getElementById('ec_customer_group').value.trim(),
+    territory: document.getElementById('ec_territory').value.trim(),
+    account_manager: document.getElementById('ec_account_manager').value.trim(),
+    website: document.getElementById('ec_website').value.trim(),
+    industry: document.getElementById('ec_industry').value.trim(),
+    market_segment: document.getElementById('ec_market_segment').value.trim(),
+    customer_details: document.getElementById('ec_customer_details').value.trim(),
+  };
+  try {
+    await apiPut(`/api/resource/Customer/${encodeURIComponent(name)}`, body);
+    showToast('Customer updated', 'success');
+    closeModal('modalEditCustomer');
+    loaded.delete('customers'); loadCustomers();
+  } catch(e) { showToast('Error: ' + (e.message||'Update failed'), 'error'); }
+}
+
+// ════════════════════════════════════════════════
+//  INVOICE VIEW
+// ════════════════════════════════════════════════
+function viewInvoice(safeId) {
+  const id = decodeURIComponent(safeId);
+  const inv = S.invoices.all.find(x => x.name === id);
+  if (!inv) return;
+  document.getElementById('viewInvTitle').textContent = inv.name;
+  const statusMap = {0:'Draft',1:'Submitted',2:'Cancelled'};
+  const st = inv.status || statusMap[inv.docstatus] || 'Draft';
+  const fields = [
+    ['Invoice #', inv.name], ['Customer', inv.customer], ['Status', st],
+    ['Posting Date', inv.posting_date], ['Due Date', inv.due_date],
+    ['Grand Total', `IDR ${(inv.grand_total||0).toLocaleString()}`],
+    ['Outstanding', `IDR ${(inv.outstanding_amount||0).toLocaleString()}`],
+  ];
+  document.getElementById('viewInvDetails').innerHTML = fields.map(([k,v]) =>
+    `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v||'—'}</div></div>`
+  ).join('');
+  document.getElementById('viewInvFrappeLink').onclick = () => window.open(`${SITE}/Sales Invoice/${inv.name}`, '_blank');
+  openModal('modalViewInvoice');
+}
+
+// ════════════════════════════════════════════════
+//  GENERIC DELETE
+// ════════════════════════════════════════════════
+let _pendingDelete = null;
+
+function confirmDelete(doctype, safeId, label) {
+  _pendingDelete = { doctype, id: decodeURIComponent(safeId), label };
+  document.getElementById('deleteConfirmMsg').textContent =
+    `Are you sure you want to delete "${label}"? This action cannot be undone in Frappe.`;
+  document.getElementById('deleteConfirmBtn').onclick = executeDelete;
+  openModal('modalConfirmDelete');
+}
+
+async function executeDelete() {
+  if (!_pendingDelete) return;
+  const { doctype, id } = _pendingDelete;
+  try {
+    await apiDelete(`/api/resource/${doctype}/${encodeURIComponent(id)}`);
+    showToast('Deleted successfully', 'success');
+    closeModal('modalConfirmDelete');
+    if (doctype === 'Lead') { loaded.delete('leads'); loadLeads(); }
+    else if (doctype === 'Customer') { loaded.delete('customers'); loadCustomers(); }
+  } catch(e) { showToast('Error: ' + (e.message||'Delete failed'), 'error'); }
+  _pendingDelete = null;
+}
+
+// ════════════════════════════════════════════════
+//  API PUT / DELETE
+// ════════════════════════════════════════════════
+async function apiPut(endpoint, body) {
+  const r = await fetch(`${SITE}${endpoint}`, {
+    method: 'PUT', headers: HEADERS, body: JSON.stringify(body)
+  });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.exception || d.message || r.status);
+  return d.data ?? d;
+}
+
+async function apiDelete(endpoint) {
+  const r = await fetch(`${SITE}${endpoint}`, { method: 'DELETE', headers: HEADERS });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.exception || d.message || r.status);
+  return d;
+}
+
+// ════════════════════════════════════════════════
+//  NOTIFICATIONS
+// ════════════════════════════════════════════════
+function toggleNotifDropdown() {
+  document.getElementById('notifDropdown').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.notif-btn');
+  if (!btn) document.getElementById('notifDropdown').classList.remove('open');
+});
+
+async function loadNotifications() {
+  // Pull recent open tickets and overdue invoices as notifications
+  const items = [];
+  const openTickets = S.tickets.all.filter(t => !['Resolved','Closed'].includes(t.status)).slice(0,3);
+  openTickets.forEach(t => items.push({ title: `Ticket: ${t.subject||t.name}`, sub: `${t.priority||'Open'} · ${t.customer||t.raised_by||''}` }));
+  const overdueInv = S.invoices.all.filter(i => i.status === 'Overdue').slice(0,3);
+  overdueInv.forEach(i => items.push({ title: `Overdue Invoice: ${i.name}`, sub: `${i.customer} — IDR ${(i.grand_total||0).toLocaleString()}` }));
+
+  const el = document.getElementById('notifList');
+  if (!items.length) {
+    el.innerHTML = `<div style="padding:1rem;text-align:center;color:var(--text-faint);font-size:0.82rem;">All caught up! 🌿</div>`;
+    return;
+  }
+  document.getElementById('notifDot').classList.add('show');
+  el.innerHTML = items.map(n => `
+    <div class="notif-item">
+      <div class="notif-item-title">${n.title}</div>
+      <div class="notif-item-sub">${n.sub}</div>
+    </div>
+  `).join('');
+}
+
+// ════════════════════════════════════════════════
+//  PAGE TITLES — updated to include new pages
 // ════════════════════════════════════════════════
 function setCurr(btn, c) {
   document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
@@ -1622,11 +2198,13 @@ async function init() {
   loaded.add('dashboard');
   await Promise.all([loadLeads(), loadCustomers()]);
 
-  // Load invoices + tickets for dashboard stats (lazy)
-  loadInvoices();
-  loadTickets();
+  // Load invoices + tickets for dashboard stats
+  await Promise.all([loadInvoices(), loadTickets()]);
   loaded.add('invoices');
   loaded.add('support');
+
+  // Populate notifications after data loaded
+  loadNotifications();
 }
 
 init();
