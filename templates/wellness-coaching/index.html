@@ -635,7 +635,7 @@
           <button class="curr-btn active" onclick="setCurr(this,'NGN')">NGN</button>
           <button class="curr-btn" onclick="setCurr(this,'USD')">USD</button>
         </div>
-        <button class="topbar-btn" onclick="alert('New Program — coming soon')">+ New Program</button>
+        <button class="topbar-btn" onclick="navigate('programs')">🌿 Programs</button>
         <button class="topbar-btn primary" onclick="openModal('modalInvoice')">+ Invoice</button>
         <div class="notif-btn" onclick="toggleNotifDropdown()">
           🔔
@@ -664,9 +664,9 @@
         </div>
         <div class="stat-card gold">
           <div class="stat-icon gold">💰</div>
-          <div class="stat-label">Open Invoices</div>
-          <div class="stat-value" id="stat-invoices">—</div>
-          <div class="stat-change down" id="stat-invoices-sub">Loading…</div>
+          <div class="stat-label">Monthly Revenue</div>
+          <div class="stat-value" id="stat-revenue">—</div>
+          <div class="stat-change up" id="stat-revenue-sub">vs last month</div>
         </div>
         <div class="stat-card brown">
           <div class="stat-icon brown">👥</div>
@@ -1272,9 +1272,7 @@
         <div class="form-group"><label class="form-label">Published</label>
           <select class="form-input" id="bf_published"><option value="0">Draft</option><option value="1">Published</option></select>
         </div>
-        <div class="form-group"><label class="form-label">Paid Batch</label>
-          <select class="form-input" id="bf_paid_batch"><option value="0">Free</option><option value="1">Paid</option></select>
-        </div>
+        <div class="form-group full"><label class="form-label">Instructor Email *</label><input class="form-input" type="email" id="bf_instructor" placeholder="coach@boedirep.com (must be a registered user)"></div>
         <div class="form-group"><label class="form-label">Description *</label><textarea class="form-input" id="bf_description" placeholder="Brief batch overview…"></textarea></div>
         <div class="form-group full"><label class="form-label">Batch Details *</label><textarea class="form-input" id="bf_batch_details" placeholder="Full details for participants…" style="min-height:80px;"></textarea></div>
       </div>
@@ -1304,7 +1302,7 @@
         <div class="form-group"><label class="form-label">Time *</label><input class="form-input" type="time" id="lc_time"></div>
         <div class="form-group"><label class="form-label">Duration (mins) *</label><input class="form-input" type="number" id="lc_duration" placeholder="60"></div>
         <div class="form-group"><label class="form-label">Timezone *</label><input class="form-input" type="text" id="lc_timezone" placeholder="Africa/Lagos"></div>
-        <div class="form-group"><label class="form-label">Zoom Account</label><input class="form-input" type="text" id="lc_zoom_account" placeholder="Zoom account ID (optional)"></div>
+        <div class="form-group"><label class="form-label">Zoom Account *</label><input class="form-input" type="text" id="lc_zoom_account" placeholder="Zoom account name (required)"></div>
         <div class="form-group full"><label class="form-label">Description</label><textarea class="form-input" id="lc_description" placeholder="Session description…"></textarea></div>
       </div>
     </div>
@@ -1327,7 +1325,7 @@
     </div>
     <div class="modal-footer">
       <button class="topbar-btn" onclick="closeModal('modalViewProgram')">Close</button>
-      <button class="topbar-btn" style="background:var(--sage-faint);color:var(--sage);border-color:var(--sage-border);" id="viewProgFrappeLink">↗ Open in Frappe</button>
+
     </div>
   </div>
 </div>
@@ -1344,7 +1342,7 @@
     </div>
     <div class="modal-footer">
       <button class="topbar-btn" onclick="closeModal('modalViewBatch')">Close</button>
-      <button class="topbar-btn" style="background:var(--sage-faint);color:var(--sage);border-color:var(--sage-border);" id="viewBatchFrappeLink">↗ Open in Frappe</button>
+
     </div>
   </div>
 </div>
@@ -1488,7 +1486,7 @@
     </div>
     <div class="modal-footer">
       <button class="topbar-btn" onclick="closeModal('modalViewInvoice')">Close</button>
-      <button class="topbar-btn" style="background:var(--sage-faint);color:var(--sage);border-color:var(--sage-border);" id="viewInvFrappeLink" onclick="">↗ Open in Frappe</button>
+
     </div>
   </div>
 </div>
@@ -1527,7 +1525,7 @@ const PER_PAGE = 20;
 // ════════════════════════════════════════════════
 //  STATE
 // ════════════════════════════════════════════════
-const S = {
+const S = { _revenueNGN: 0, _revenuePrevNGN: 0,
   leads:     { all: [], filtered: [], page: 1 },
   customers: { all: [], filtered: [], page: 1 },
   invoices:  { all: [], filtered: [], page: 1 },
@@ -1931,15 +1929,62 @@ function updateDashCustomers() {
 // ════════════════════════════════════════════════
 async function loadInvoices() {
   const fields = JSON.stringify(['name','customer','posting_date','due_date','grand_total','status','docstatus','outstanding_amount']);
-  const data = await apiGet(`/api/resource/Sales Invoice?fields=${fields}&limit=300&order_by=creation desc`);
+  const data = await apiGet(`/api/resource/Sales Invoice?fields=${fields}&limit=500&order_by=creation desc`);
   S.invoices.all = data || [];
   S.invoices.filtered = [...S.invoices.all];
   S.invoices.page = 1;
   renderInvoices();
-  // Dashboard stat
-  const unpaid = S.invoices.all.filter(i => i.status !== 'Paid' && i.docstatus !== 2).length;
-  document.getElementById('stat-invoices').textContent = unpaid;
-  document.getElementById('stat-invoices-sub').textContent = 'unpaid invoices';
+  updateRevenueCard();
+}
+
+function updateRevenueCard() {
+  const now = new Date();
+  const thisMonth = now.getMonth(), thisYear = now.getFullYear();
+  const prevMonth = thisMonth === 0 ? 11 : thisMonth - 1;
+  const prevYear  = thisMonth === 0 ? thisYear - 1 : thisYear;
+
+  const inMonth = (inv, m, y) => {
+    if (!inv.posting_date) return false;
+    const d = new Date(inv.posting_date);
+    return d.getMonth() === m && d.getFullYear() === y;
+  };
+
+  const paid = S.invoices.all.filter(i => i.status === 'Paid' || i.docstatus === 1);
+  const thisRev = paid.filter(i => inMonth(i, thisMonth, thisYear)).reduce((s,i) => s + (i.grand_total||0), 0);
+  const lastRev = paid.filter(i => inMonth(i, prevMonth, prevYear)).reduce((s,i) => s + (i.grand_total||0), 0);
+
+  // Store for currency toggle
+  S._revenueNGN = thisRev;
+  S._revenuePrevNGN = lastRev;
+  renderRevenueCard();
+}
+
+function renderRevenueCard() {
+  const el = document.getElementById('stat-revenue');
+  const subEl = document.getElementById('stat-revenue-sub');
+  if (!el) return;
+  const isUSD = document.querySelector('.curr-btn.active')?.textContent === 'USD';
+  const rate = 1650; // approx NGN per USD
+  const rev  = S._revenueNGN || 0;
+  const prev = S._revenuePrevNGN || 0;
+  const displayRev  = isUSD ? rev / rate : rev;
+  const symbol = isUSD ? '$' : '₦';
+  const fmt = n => {
+    if (n >= 1e9) return symbol + (n/1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return symbol + (n/1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return symbol + (n/1e3).toFixed(1) + 'K';
+    return symbol + Math.round(n).toLocaleString();
+  };
+  el.textContent = rev > 0 ? fmt(displayRev) : (symbol + '0');
+  if (prev > 0) {
+    const pct = Math.round(((rev - prev) / prev) * 100);
+    const arrow = pct >= 0 ? '↑' : '↓';
+    subEl.textContent = `${arrow} ${Math.abs(pct)}% vs last month`;
+    subEl.className = 'stat-change ' + (pct >= 0 ? 'up' : 'down');
+  } else {
+    subEl.textContent = 'This month';
+    subEl.className = 'stat-change';
+  }
 }
 
 function renderInvoices() {
@@ -1962,11 +2007,11 @@ function renderInvoices() {
       <td>${inv.customer||'—'}</td>
       <td>${inv.posting_date||'—'}</td>
       <td>${inv.due_date||'—'}</td>
-      <td class="cell-main">IDR ${(inv.grand_total||0).toLocaleString()}</td>
+      <td class="cell-main">${fmtMoney(inv.grand_total||0)}</td>
       <td>${badge(sc, st)}</td>
       <td><div class="row-actions">
         <button class="action-btn view" onclick="viewInvoice('${safeId}')">View</button>
-        <button class="action-btn convert" onclick="window.open('${SITE}/Sales Invoice/${inv.name}','_blank')">↗ Frappe</button>
+
       </div></td>
     </tr>`;
   }).join('');
@@ -2209,7 +2254,7 @@ function renderPrograms() {
       <td>${p.published ? badge('green','Published') : badge('gray','Draft')}</td>
       <td><div class="row-actions">
         <button class="action-btn view" onclick="viewProgram('${safeId}')">View</button>
-        <button class="action-btn convert" onclick="window.open('${SITE}/lms/programs/${p.name}','_blank')">↗ LMS</button>
+
         <button class="action-btn del" onclick="confirmDelete('LMS Program','${safeId}','${(p.title||'').replace(/'/g,"\\'")}')">Delete</button>
       </div></td>
     </tr>`;
@@ -2246,7 +2291,6 @@ function viewProgram(safeId) {
   document.getElementById('viewProgDetails').innerHTML = fields.map(([k,v]) =>
     `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v??'—'}</div></div>`
   ).join('');
-  document.getElementById('viewProgFrappeLink').onclick = () => window.open(`${SITE}/lms/programs/${p.name}`, '_blank');
   openModal('modalViewProgram');
 }
 
@@ -2306,7 +2350,7 @@ function renderBatches() {
       <td>${b.published ? badge('green','Published') : badge('gray','Draft')}</td>
       <td><div class="row-actions">
         <button class="action-btn view" onclick="viewBatch('${safeId}')">View</button>
-        <button class="action-btn convert" onclick="window.open('${SITE}/lms/batches/${b.name}','_blank')">↗ LMS</button>
+
         <button class="action-btn del" onclick="confirmDelete('LMS Batch','${safeId}','${(b.title||'').replace(/'/g,"\\'")}')">Delete</button>
       </div></td>
     </tr>`;
@@ -2323,15 +2367,18 @@ async function saveBatch() {
   const timezone = document.getElementById('bf_timezone').value.trim();
   const description = document.getElementById('bf_description').value.trim();
   const batch_details = document.getElementById('bf_batch_details').value.trim();
+  const instructorEmail = document.getElementById('bf_instructor').value.trim();
   if (!title || !start_date || !end_date || !start_time || !end_time || !timezone || !description || !batch_details)
     return showToast('All required fields must be filled', 'error');
+  if (!instructorEmail) return showToast('Instructor email is required', 'error');
   try {
     await apiPost('/api/resource/LMS Batch', {
       title, start_date, end_date, start_time, end_time, timezone, description, batch_details,
       seat_count: parseInt(document.getElementById('bf_seat_count').value)||0,
       medium: document.getElementById('bf_medium').value,
       published: parseInt(document.getElementById('bf_published').value),
-      paid_batch: parseInt(document.getElementById('bf_paid_batch').value),
+      paid_batch: 0,
+      instructors: [{ instructor: instructorEmail }],
     });
     showToast('Batch created!', 'success');
     closeModal('modalBatch');
@@ -2348,13 +2395,12 @@ function viewBatch(safeId) {
     ['Title', b.title], ['Start Date', b.start_date], ['End Date', b.end_date],
     ['Start Time', b.start_time], ['End Time', b.end_time], ['Timezone', b.timezone],
     ['Seats', b.seat_count], ['Medium', b.medium], ['Published', b.published ? 'Yes' : 'No'],
-    ['Paid Batch', b.paid_batch ? 'Yes' : 'No'], ['Amount', b.amount ? `IDR ${Number(b.amount).toLocaleString()}` : '—'],
+    ['Paid Batch', b.paid_batch ? 'Yes' : 'No'], ['Amount', b.amount ? fmtMoney(b.amount) : '—'],
     ['Description', b.description],
   ];
   document.getElementById('viewBatchDetails').innerHTML = fields.map(([k,v]) =>
     `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v??'—'}</div></div>`
   ).join('');
-  document.getElementById('viewBatchFrappeLink').onclick = () => window.open(`${SITE}/lms/batches/${b.name}`, '_blank');
   openModal('modalViewBatch');
 }
 
@@ -2415,9 +2461,9 @@ async function saveLiveClass() {
   const zoom_account = document.getElementById('lc_zoom_account').value.trim();
   if (!title || !host || !date || !time || !duration || !timezone)
     return showToast('Title, host, date, time, duration and timezone are required', 'error');
-  const body = { title, host, date, time, duration: parseInt(duration), timezone };
+  if (!zoom_account) return showToast('Zoom Account ID is required by the platform', 'error');
+  const body = { title, host, date, time, duration: parseInt(duration), timezone, zoom_account };
   if (document.getElementById('lc_batch_name').value) body.batch_name = document.getElementById('lc_batch_name').value;
-  if (zoom_account) body.zoom_account = zoom_account;
   if (document.getElementById('lc_description').value.trim()) body.description = document.getElementById('lc_description').value.trim();
   try {
     await apiPost('/api/resource/LMS Live Class', body);
@@ -2708,8 +2754,8 @@ function viewInvoice(safeId) {
   const fields = [
     ['Invoice #', inv.name], ['Customer', inv.customer], ['Status', st],
     ['Posting Date', inv.posting_date], ['Due Date', inv.due_date],
-    ['Grand Total', `IDR ${(inv.grand_total||0).toLocaleString()}`],
-    ['Outstanding', `IDR ${(inv.outstanding_amount||0).toLocaleString()}`],
+    ['Grand Total', fmtMoney(inv.grand_total||0)],
+    ['Outstanding', fmtMoney(inv.outstanding_amount||0)],
   ];
   document.getElementById('viewInvDetails').innerHTML = fields.map(([k,v]) =>
     `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v||'—'}</div></div>`
@@ -2726,7 +2772,7 @@ let _pendingDelete = null;
 function confirmDelete(doctype, safeId, label) {
   _pendingDelete = { doctype, id: decodeURIComponent(safeId), label };
   document.getElementById('deleteConfirmMsg').textContent =
-    `Are you sure you want to delete "${label}"? This action cannot be undone in Frappe.`;
+    `Are you sure you want to delete "${label}"? This action cannot be undone.`;
   document.getElementById('deleteConfirmBtn').onclick = executeDelete;
   openModal('modalConfirmDelete');
 }
@@ -2740,6 +2786,12 @@ async function executeDelete() {
     closeModal('modalConfirmDelete');
     if (doctype === 'Lead') { loaded.delete('leads'); loadLeads(); }
     else if (doctype === 'Customer') { loaded.delete('customers'); loadCustomers(); }
+    else if (doctype === 'Sales Invoice') { loaded.delete('invoices'); loadInvoices(); }
+    else if (doctype === 'LMS Program') { loaded.delete('programs'); loadPrograms(); }
+    else if (doctype === 'LMS Batch') { loaded.delete('sessions'); loadBatches(); }
+    else if (doctype === 'LMS Live Class') { loaded.delete('sessions'); loadLiveClasses(); }
+    else if (doctype === 'LMS Enrollment') { loaded.delete('participants'); loadEnrollments(); }
+    else if (doctype === 'LMS Batch Enrollment') { loaded.delete('participants'); loadBatchEnrollments(); }
   } catch(e) { showToast('Error: ' + (e.message||'Delete failed'), 'error'); }
   _pendingDelete = null;
 }
@@ -2780,7 +2832,7 @@ async function loadNotifications() {
   const openTickets = S.tickets.all.filter(t => !['Resolved','Closed'].includes(t.status)).slice(0,3);
   openTickets.forEach(t => items.push({ title: `Ticket: ${t.subject||t.name}`, sub: `${t.priority||'Open'} · ${t.customer||t.raised_by||''}` }));
   const overdueInv = S.invoices.all.filter(i => i.status === 'Overdue').slice(0,3);
-  overdueInv.forEach(i => items.push({ title: `Overdue Invoice: ${i.name}`, sub: `${i.customer} — IDR ${(i.grand_total||0).toLocaleString()}` }));
+  overdueInv.forEach(i => items.push({ title: `Overdue Invoice: ${i.name}`, sub: `${i.customer} — ${fmtMoney(i.grand_total||0)}` }));
 
   const el = document.getElementById('notifList');
   if (!items.length) {
@@ -2799,9 +2851,22 @@ async function loadNotifications() {
 // ════════════════════════════════════════════════
 //  PAGE TITLES — updated to include new pages
 // ════════════════════════════════════════════════
+let _currMode = 'NGN';
 function setCurr(btn, c) {
   document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  _currMode = c;
+  renderRevenueCard();
+  // Re-render invoice amounts if on that page
+  if (S.invoices.all.length) renderInvoices();
+}
+
+function fmtMoney(amount) {
+  const isUSD = _currMode === 'USD';
+  const rate = 1650;
+  const val = isUSD ? amount / rate : amount;
+  const sym = isUSD ? '$' : '₦';
+  return sym + val.toLocaleString(undefined, {minimumFractionDigits: isUSD ? 2 : 0, maximumFractionDigits: isUSD ? 2 : 0});
 }
 
 // ════════════════════════════════════════════════
@@ -2826,6 +2891,8 @@ async function init() {
 
   // Populate notifications after data loaded
   loadNotifications();
+  // Initial revenue render (in case invoices had 0 paid)
+  renderRevenueCard();
 }
 
 init();
