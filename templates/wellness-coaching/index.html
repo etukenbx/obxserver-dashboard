@@ -967,31 +967,147 @@
       </div></div>
     </div>
 
-    <!-- ══════ PROGRAMS PAGE ══════ -->
+    <!-- ══════ PROGRAMS PAGE (LMS Program) ══════ -->
     <div class="page" id="page-programs">
-      <div class="card"><div class="coming-soon">
-        <div class="coming-soon-icon">🌿</div>
-        <h3>All Programs</h3>
-        <p>Manage your wellness programs for diabetes patients — cohorts, schedules, and capacity. Coming soon.</p>
-      </div></div>
+      <div class="page-toolbar">
+        <input class="search-input" type="text" id="programSearch" placeholder="Search programs…" oninput="filterPrograms()">
+        <select class="filter-select" id="programPublishedFilter" onchange="filterPrograms()">
+          <option value="">All Status</option>
+          <option value="1">Published</option>
+          <option value="0">Draft</option>
+        </select>
+        <button class="topbar-btn primary" onclick="openModal('modalProgram')">+ New Program</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">Wellness Programs</div><div class="card-subtitle" id="programCountLabel">Loading…</div></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Program</th><th>Courses</th><th>Members</th><th>Order Enforced</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="programsBody">
+              <tr class="loading-row"><td colspan="6">Loading programs…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="programPagination"></div>
+      </div>
     </div>
 
-    <!-- ══════ SESSIONS PAGE ══════ -->
+    <!-- ══════ SESSIONS PAGE (LMS Batch + Live Class) ══════ -->
     <div class="page" id="page-sessions">
-      <div class="card"><div class="coming-soon">
-        <div class="coming-soon-icon">📅</div>
-        <h3>Sessions</h3>
-        <p>Track individual coaching and group sessions, attendance, and session notes. Coming soon.</p>
-      </div></div>
+      <!-- BATCHES SUB-SECTION -->
+      <div class="page-toolbar">
+        <input class="search-input" type="text" id="batchSearch" placeholder="Search batches…" oninput="filterBatches()">
+        <select class="filter-select" id="batchMediumFilter" onchange="filterBatches()">
+          <option value="">All Mediums</option>
+          <option>Online</option><option>Offline</option>
+        </select>
+        <select class="filter-select" id="batchPublishedFilter" onchange="filterBatches()">
+          <option value="">All Status</option>
+          <option value="1">Published</option>
+          <option value="0">Draft</option>
+        </select>
+        <button class="topbar-btn primary" onclick="openModal('modalBatch')">+ New Batch</button>
+      </div>
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header">
+          <div><div class="card-title">Batches / Cohorts</div><div class="card-subtitle" id="batchCountLabel">Loading…</div></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Title</th><th>Start Date</th><th>End Date</th><th>Time</th><th>Seats</th><th>Medium</th><th>Published</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="batchesBody">
+              <tr class="loading-row"><td colspan="8">Loading batches…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="batchPagination"></div>
+      </div>
+
+      <!-- LIVE CLASSES SUB-SECTION -->
+      <div class="page-toolbar" style="margin-top:0.5rem;">
+        <input class="search-input" type="text" id="liveClassSearch" placeholder="Search live classes…" oninput="filterLiveClasses()">
+        <select class="filter-select" id="liveClassBatchFilter" onchange="filterLiveClasses()">
+          <option value="">All Batches</option>
+        </select>
+        <button class="topbar-btn primary" onclick="openModal('modalLiveClass')">+ New Live Class</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">Live Classes</div><div class="card-subtitle" id="liveClassCountLabel">Loading…</div></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Title</th><th>Host</th><th>Batch</th><th>Date</th><th>Time</th><th>Duration</th><th>Attendees</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="liveClassesBody">
+              <tr class="loading-row"><td colspan="8">Loading live classes…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="liveClassPagination"></div>
+      </div>
     </div>
 
-    <!-- ══════ PARTICIPANTS PAGE ══════ -->
+    <!-- ══════ PARTICIPANTS PAGE (LMS Enrollment + Batch Enrollment) ══════ -->
     <div class="page" id="page-participants">
-      <div class="card"><div class="coming-soon">
-        <div class="coming-soon-icon">👥</div>
-        <h3>Participants</h3>
-        <p>Enrolled members, health progress tracking, and program participation history. Coming soon.</p>
-      </div></div>
+      <!-- COURSE ENROLLMENTS -->
+      <div class="page-toolbar">
+        <input class="search-input" type="text" id="enrollSearch" placeholder="Search by name, email, course…" oninput="filterEnrollments()">
+        <select class="filter-select" id="enrollTypeFilter" onchange="filterEnrollments()">
+          <option value="">All Types</option>
+          <option>Student</option><option>Mentor</option><option>Staff</option>
+        </select>
+        <select class="filter-select" id="enrollCourseFilter" onchange="filterEnrollments()">
+          <option value="">All Courses</option>
+        </select>
+      </div>
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header">
+          <div><div class="card-title">Course Enrollments</div><div class="card-subtitle" id="enrollCountLabel">Loading…</div></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Member</th><th>Course</th><th>Progress</th><th>Type</th><th>Batch</th><th>Certificate</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="enrollmentsBody">
+              <tr class="loading-row"><td colspan="7">Loading enrollments…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="enrollPagination"></div>
+      </div>
+
+      <!-- BATCH ENROLLMENTS -->
+      <div class="page-toolbar" style="margin-top:0.5rem;">
+        <input class="search-input" type="text" id="batchEnrollSearch" placeholder="Search batch enrollments…" oninput="filterBatchEnrollments()">
+        <select class="filter-select" id="batchEnrollBatchFilter" onchange="filterBatchEnrollments()">
+          <option value="">All Batches</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">Batch Enrollments</div><div class="card-subtitle" id="batchEnrollCountLabel">Loading…</div></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Member</th><th>Batch</th><th>Source</th><th>Payment</th><th>Email Sent</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="batchEnrollmentsBody">
+              <tr class="loading-row"><td colspan="6">Loading batch enrollments…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="batchEnrollPagination"></div>
+      </div>
     </div>
 
   </div><!-- /content -->
@@ -1109,7 +1225,129 @@
   </div>
 </div>
 
-<!-- VIEW LEAD MODAL -->
+<!-- NEW PROGRAM MODAL -->
+<div class="modal-overlay" id="modalProgram">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">New Wellness Program</span>
+      <button class="modal-close" onclick="closeModal('modalProgram')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Program Title *</label><input class="form-input" type="text" id="pf_title" placeholder="e.g. Diabetes Reversal Program"></div>
+        <div class="form-group"><label class="form-label">Published</label>
+          <select class="form-input" id="pf_published"><option value="0">Draft</option><option value="1">Published</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Enforce Course Order</label>
+          <select class="form-input" id="pf_enforce_course_order"><option value="0">No</option><option value="1">Yes</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalProgram')">Cancel</button>
+      <button class="topbar-btn primary" onclick="saveProgram()">Create Program</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW BATCH MODAL -->
+<div class="modal-overlay" id="modalBatch">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">New Batch / Cohort</span>
+      <button class="modal-close" onclick="closeModal('modalBatch')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Title *</label><input class="form-input" type="text" id="bf_title" placeholder="e.g. Mind-Body Reset — Cohort 4"></div>
+        <div class="form-group"><label class="form-label">Start Date *</label><input class="form-input" type="date" id="bf_start_date"></div>
+        <div class="form-group"><label class="form-label">End Date *</label><input class="form-input" type="date" id="bf_end_date"></div>
+        <div class="form-group"><label class="form-label">Start Time *</label><input class="form-input" type="time" id="bf_start_time"></div>
+        <div class="form-group"><label class="form-label">End Time *</label><input class="form-input" type="time" id="bf_end_time"></div>
+        <div class="form-group"><label class="form-label">Timezone *</label><input class="form-input" type="text" id="bf_timezone" placeholder="e.g. Africa/Lagos"></div>
+        <div class="form-group"><label class="form-label">Seat Count</label><input class="form-input" type="number" id="bf_seat_count" placeholder="e.g. 20"></div>
+        <div class="form-group"><label class="form-label">Medium</label>
+          <select class="form-input" id="bf_medium"><option>Online</option><option>Offline</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Published</label>
+          <select class="form-input" id="bf_published"><option value="0">Draft</option><option value="1">Published</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Paid Batch</label>
+          <select class="form-input" id="bf_paid_batch"><option value="0">Free</option><option value="1">Paid</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Description *</label><textarea class="form-input" id="bf_description" placeholder="Brief batch overview…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Batch Details *</label><textarea class="form-input" id="bf_batch_details" placeholder="Full details for participants…" style="min-height:80px;"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalBatch')">Cancel</button>
+      <button class="topbar-btn primary" onclick="saveBatch()">Create Batch</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW LIVE CLASS MODAL -->
+<div class="modal-overlay" id="modalLiveClass">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">New Live Class</span>
+      <button class="modal-close" onclick="closeModal('modalLiveClass')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Title *</label><input class="form-input" type="text" id="lc_title" placeholder="e.g. Holistic Nutrition Session 3"></div>
+        <div class="form-group"><label class="form-label">Host (User email) *</label><input class="form-input" type="text" id="lc_host" placeholder="coach@boedirep.com"></div>
+        <div class="form-group"><label class="form-label">Batch</label>
+          <select class="form-input" id="lc_batch_name"><option value="">— None —</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Date *</label><input class="form-input" type="date" id="lc_date"></div>
+        <div class="form-group"><label class="form-label">Time *</label><input class="form-input" type="time" id="lc_time"></div>
+        <div class="form-group"><label class="form-label">Duration (mins) *</label><input class="form-input" type="number" id="lc_duration" placeholder="60"></div>
+        <div class="form-group"><label class="form-label">Timezone *</label><input class="form-input" type="text" id="lc_timezone" placeholder="Africa/Lagos"></div>
+        <div class="form-group"><label class="form-label">Zoom Account</label><input class="form-input" type="text" id="lc_zoom_account" placeholder="Zoom account ID (optional)"></div>
+        <div class="form-group full"><label class="form-label">Description</label><textarea class="form-input" id="lc_description" placeholder="Session description…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalLiveClass')">Cancel</button>
+      <button class="topbar-btn primary" onclick="saveLiveClass()">Create Live Class</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW PROGRAM MODAL -->
+<div class="modal-overlay" id="modalViewProgram">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <span class="modal-title" id="viewProgTitle">Program Details</span>
+      <button class="modal-close" onclick="closeModal('modalViewProgram')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="viewProgDetails"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalViewProgram')">Close</button>
+      <button class="topbar-btn" style="background:var(--sage-faint);color:var(--sage);border-color:var(--sage-border);" id="viewProgFrappeLink">↗ Open in Frappe</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW BATCH MODAL -->
+<div class="modal-overlay" id="modalViewBatch">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <span class="modal-title" id="viewBatchTitle">Batch Details</span>
+      <button class="modal-close" onclick="closeModal('modalViewBatch')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="viewBatchDetails"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="topbar-btn" onclick="closeModal('modalViewBatch')">Close</button>
+      <button class="topbar-btn" style="background:var(--sage-faint);color:var(--sage);border-color:var(--sage-border);" id="viewBatchFrappeLink">↗ Open in Frappe</button>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="modalViewLead">
   <div class="modal modal-wide">
     <div class="modal-header">
@@ -1382,12 +1620,14 @@ document.getElementById('hamburger').addEventListener('click', () => {
 });
 
 function loadPage(page) {
-  if (page === 'leads')        loadLeads();
+  if (page === 'leads')           loadLeads();
   else if (page === 'customers')  loadCustomers();
   else if (page === 'invoices')   loadInvoices();
   else if (page === 'support')    loadTickets();
   else if (page === 'hr')         loadHR();
-  // analytics, programs, sessions, participants are stub pages — nothing to load yet
+  else if (page === 'programs')   loadPrograms();
+  else if (page === 'sessions')   { loadBatches(); loadLiveClasses(); }
+  else if (page === 'participants') { loadEnrollments(); loadBatchEnrollments(); }
 }
 
 // ════════════════════════════════════════════════
@@ -1922,7 +2162,388 @@ function showToast(msg, type = '') {
 }
 
 // ════════════════════════════════════════════════
-//  LEAD VIEW / EDIT / DELETE
+//  LMS STATE
+// ════════════════════════════════════════════════
+S.programs     = { all: [], filtered: [], page: 1 };
+S.batches      = { all: [], filtered: [], page: 1 };
+S.liveClasses  = { all: [], filtered: [], page: 1 };
+S.enrollments  = { all: [], filtered: [], page: 1 };
+S.batchEnrolls = { all: [], filtered: [], page: 1 };
+
+// ════════════════════════════════════════════════
+//  PROGRAMS
+// ════════════════════════════════════════════════
+async function loadPrograms() {
+  const data = await apiGet('/api/resource/LMS Program?fields=["name","title","published","enforce_course_order","course_count","member_count","creation"]&limit=200&order_by=creation desc');
+  if (!data) return;
+  S.programs.all = data;
+  S.programs.filtered = [...data];
+  document.getElementById('programCountLabel').textContent = `${data.length} programs`;
+  renderPrograms();
+}
+
+function filterPrograms() {
+  const q = document.getElementById('programSearch').value.toLowerCase();
+  const pub = document.getElementById('programPublishedFilter').value;
+  S.programs.filtered = S.programs.all.filter(p => {
+    const matchQ = !q || (p.title||'').toLowerCase().includes(q);
+    const matchPub = pub === '' || String(p.published) === pub;
+    return matchQ && matchPub;
+  });
+  S.programs.page = 1;
+  renderPrograms();
+}
+
+function renderPrograms() {
+  const { filtered, page } = S.programs;
+  document.getElementById('programCountLabel').textContent = `${filtered.length} program${filtered.length!==1?'s':''}`;
+  const tbody = document.getElementById('programsBody');
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-faint);">No programs found</td></tr>`; return; }
+  tbody.innerHTML = getPage(filtered, page).map(p => {
+    const safeId = encodeURIComponent(p.name);
+    return `<tr>
+      <td><div class="cell-main">${p.title||p.name}</div></td>
+      <td>${p.course_count||0}</td>
+      <td>${p.member_count||0}</td>
+      <td>${p.enforce_course_order ? badge('green','Yes') : badge('gray','No')}</td>
+      <td>${p.published ? badge('green','Published') : badge('gray','Draft')}</td>
+      <td><div class="row-actions">
+        <button class="action-btn view" onclick="viewProgram('${safeId}')">View</button>
+        <button class="action-btn convert" onclick="window.open('${SITE}/lms/programs/${p.name}','_blank')">↗ LMS</button>
+        <button class="action-btn del" onclick="confirmDelete('LMS Program','${safeId}','${(p.title||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderPagination('programPagination', page, filtered.length, n => { S.programs.page = n; renderPrograms(); });
+}
+
+async function saveProgram() {
+  const title = document.getElementById('pf_title').value.trim();
+  if (!title) return showToast('Program title required', 'error');
+  try {
+    await apiPost('/api/resource/LMS Program', {
+      title,
+      published: parseInt(document.getElementById('pf_published').value),
+      enforce_course_order: parseInt(document.getElementById('pf_enforce_course_order').value),
+    });
+    showToast('Program created!', 'success');
+    closeModal('modalProgram');
+    loaded.delete('programs'); loadPrograms();
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+function viewProgram(safeId) {
+  const id = decodeURIComponent(safeId);
+  const p = S.programs.all.find(x => x.name === id);
+  if (!p) return;
+  document.getElementById('viewProgTitle').textContent = p.title || p.name;
+  const fields = [
+    ['Title', p.title], ['Published', p.published ? 'Yes' : 'No'],
+    ['Enforce Order', p.enforce_course_order ? 'Yes' : 'No'],
+    ['Course Count', p.course_count], ['Member Count', p.member_count],
+    ['Created', (p.creation||'').split(' ')[0]],
+  ];
+  document.getElementById('viewProgDetails').innerHTML = fields.map(([k,v]) =>
+    `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v??'—'}</div></div>`
+  ).join('');
+  document.getElementById('viewProgFrappeLink').onclick = () => window.open(`${SITE}/lms/programs/${p.name}`, '_blank');
+  openModal('modalViewProgram');
+}
+
+// ════════════════════════════════════════════════
+//  BATCHES
+// ════════════════════════════════════════════════
+async function loadBatches() {
+  const data = await apiGet('/api/resource/LMS Batch?fields=["name","title","start_date","end_date","start_time","end_time","timezone","seat_count","medium","published","paid_batch","amount","description","creation"]&limit=200&order_by=start_date desc');
+  if (!data) return;
+  S.batches.all = data;
+  S.batches.filtered = [...data];
+  // Populate live class batch filter
+  const batchSel = document.getElementById('liveClassBatchFilter');
+  const beFilter = document.getElementById('batchEnrollBatchFilter');
+  const lcModal  = document.getElementById('lc_batch_name');
+  data.forEach(b => {
+    [batchSel, beFilter, lcModal].forEach(el => {
+      if (el && !el.querySelector(`option[value="${b.name}"]`)) {
+        const o = document.createElement('option');
+        o.value = b.name; o.textContent = b.title || b.name;
+        el.appendChild(o);
+      }
+    });
+  });
+  renderBatches();
+}
+
+function filterBatches() {
+  const q = document.getElementById('batchSearch').value.toLowerCase();
+  const med = document.getElementById('batchMediumFilter').value;
+  const pub = document.getElementById('batchPublishedFilter').value;
+  S.batches.filtered = S.batches.all.filter(b => {
+    const matchQ = !q || (b.title||'').toLowerCase().includes(q);
+    const matchMed = !med || b.medium === med;
+    const matchPub = pub === '' || String(b.published) === pub;
+    return matchQ && matchMed && matchPub;
+  });
+  S.batches.page = 1;
+  renderBatches();
+}
+
+function renderBatches() {
+  const { filtered, page } = S.batches;
+  document.getElementById('batchCountLabel').textContent = `${filtered.length} batch${filtered.length!==1?'es':''}`;
+  const tbody = document.getElementById('batchesBody');
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-faint);">No batches found</td></tr>`; return; }
+  tbody.innerHTML = getPage(filtered, page).map(b => {
+    const safeId = encodeURIComponent(b.name);
+    const time = b.start_time ? b.start_time.substring(0,5) : '—';
+    return `<tr>
+      <td><div class="cell-main">${b.title||b.name}</div><div class="cell-sub">${b.description||''}</div></td>
+      <td>${b.start_date||'—'}</td>
+      <td>${b.end_date||'—'}</td>
+      <td>${time}</td>
+      <td>${b.seat_count||'—'}</td>
+      <td>${b.medium ? badge(b.medium==='Online'?'blue':'gold', b.medium) : '—'}</td>
+      <td>${b.published ? badge('green','Published') : badge('gray','Draft')}</td>
+      <td><div class="row-actions">
+        <button class="action-btn view" onclick="viewBatch('${safeId}')">View</button>
+        <button class="action-btn convert" onclick="window.open('${SITE}/lms/batches/${b.name}','_blank')">↗ LMS</button>
+        <button class="action-btn del" onclick="confirmDelete('LMS Batch','${safeId}','${(b.title||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderPagination('batchPagination', page, filtered.length, n => { S.batches.page = n; renderBatches(); });
+}
+
+async function saveBatch() {
+  const title = document.getElementById('bf_title').value.trim();
+  const start_date = document.getElementById('bf_start_date').value;
+  const end_date = document.getElementById('bf_end_date').value;
+  const start_time = document.getElementById('bf_start_time').value;
+  const end_time = document.getElementById('bf_end_time').value;
+  const timezone = document.getElementById('bf_timezone').value.trim();
+  const description = document.getElementById('bf_description').value.trim();
+  const batch_details = document.getElementById('bf_batch_details').value.trim();
+  if (!title || !start_date || !end_date || !start_time || !end_time || !timezone || !description || !batch_details)
+    return showToast('All required fields must be filled', 'error');
+  try {
+    await apiPost('/api/resource/LMS Batch', {
+      title, start_date, end_date, start_time, end_time, timezone, description, batch_details,
+      seat_count: parseInt(document.getElementById('bf_seat_count').value)||0,
+      medium: document.getElementById('bf_medium').value,
+      published: parseInt(document.getElementById('bf_published').value),
+      paid_batch: parseInt(document.getElementById('bf_paid_batch').value),
+    });
+    showToast('Batch created!', 'success');
+    closeModal('modalBatch');
+    loaded.delete('sessions'); loadBatches();
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+function viewBatch(safeId) {
+  const id = decodeURIComponent(safeId);
+  const b = S.batches.all.find(x => x.name === id);
+  if (!b) return;
+  document.getElementById('viewBatchTitle').textContent = b.title || b.name;
+  const fields = [
+    ['Title', b.title], ['Start Date', b.start_date], ['End Date', b.end_date],
+    ['Start Time', b.start_time], ['End Time', b.end_time], ['Timezone', b.timezone],
+    ['Seats', b.seat_count], ['Medium', b.medium], ['Published', b.published ? 'Yes' : 'No'],
+    ['Paid Batch', b.paid_batch ? 'Yes' : 'No'], ['Amount', b.amount ? `IDR ${Number(b.amount).toLocaleString()}` : '—'],
+    ['Description', b.description],
+  ];
+  document.getElementById('viewBatchDetails').innerHTML = fields.map(([k,v]) =>
+    `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v??'—'}</div></div>`
+  ).join('');
+  document.getElementById('viewBatchFrappeLink').onclick = () => window.open(`${SITE}/lms/batches/${b.name}`, '_blank');
+  openModal('modalViewBatch');
+}
+
+// ════════════════════════════════════════════════
+//  LIVE CLASSES
+// ════════════════════════════════════════════════
+async function loadLiveClasses() {
+  const data = await apiGet('/api/resource/LMS Live Class?fields=["name","title","host","batch_name","date","time","duration","timezone","attendees","description","creation"]&limit=200&order_by=date desc');
+  if (!data) return;
+  S.liveClasses.all = data;
+  S.liveClasses.filtered = [...data];
+  renderLiveClasses();
+}
+
+function filterLiveClasses() {
+  const q = document.getElementById('liveClassSearch').value.toLowerCase();
+  const batch = document.getElementById('liveClassBatchFilter').value;
+  S.liveClasses.filtered = S.liveClasses.all.filter(l => {
+    const matchQ = !q || (l.title||'').toLowerCase().includes(q) || (l.host||'').toLowerCase().includes(q);
+    const matchBatch = !batch || l.batch_name === batch;
+    return matchQ && matchBatch;
+  });
+  S.liveClasses.page = 1;
+  renderLiveClasses();
+}
+
+function renderLiveClasses() {
+  const { filtered, page } = S.liveClasses;
+  document.getElementById('liveClassCountLabel').textContent = `${filtered.length} live class${filtered.length!==1?'es':''}`;
+  const tbody = document.getElementById('liveClassesBody');
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-faint);">No live classes found</td></tr>`; return; }
+  tbody.innerHTML = getPage(filtered, page).map(l => {
+    const safeId = encodeURIComponent(l.name);
+    return `<tr>
+      <td class="cell-main">${l.title||l.name}</td>
+      <td class="cell-sub">${(l.host||'').split('@')[0]||'—'}</td>
+      <td>${l.batch_name||'—'}</td>
+      <td>${l.date||'—'}</td>
+      <td>${l.time ? l.time.substring(0,5) : '—'}</td>
+      <td>${l.duration ? `${l.duration} min` : '—'}</td>
+      <td>${l.attendees||0}</td>
+      <td><div class="row-actions">
+        <button class="action-btn view" onclick="alert('Live class: ${(l.title||l.name).replace(/'/g,"\\'")}')">View</button>
+        <button class="action-btn del" onclick="confirmDelete('LMS Live Class','${safeId}','${(l.title||'').replace(/'/g,"\\'")}')">Delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderPagination('liveClassPagination', page, filtered.length, n => { S.liveClasses.page = n; renderLiveClasses(); });
+}
+
+async function saveLiveClass() {
+  const title = document.getElementById('lc_title').value.trim();
+  const host = document.getElementById('lc_host').value.trim();
+  const date = document.getElementById('lc_date').value;
+  const time = document.getElementById('lc_time').value;
+  const duration = document.getElementById('lc_duration').value;
+  const timezone = document.getElementById('lc_timezone').value.trim();
+  const zoom_account = document.getElementById('lc_zoom_account').value.trim();
+  if (!title || !host || !date || !time || !duration || !timezone)
+    return showToast('Title, host, date, time, duration and timezone are required', 'error');
+  const body = { title, host, date, time, duration: parseInt(duration), timezone };
+  if (document.getElementById('lc_batch_name').value) body.batch_name = document.getElementById('lc_batch_name').value;
+  if (zoom_account) body.zoom_account = zoom_account;
+  if (document.getElementById('lc_description').value.trim()) body.description = document.getElementById('lc_description').value.trim();
+  try {
+    await apiPost('/api/resource/LMS Live Class', body);
+    showToast('Live class created!', 'success');
+    closeModal('modalLiveClass');
+    loaded.delete('sessions'); loadLiveClasses();
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+// ════════════════════════════════════════════════
+//  ENROLLMENTS (Course)
+// ════════════════════════════════════════════════
+async function loadEnrollments() {
+  const data = await apiGet('/api/resource/LMS Enrollment?fields=["name","member","member_name","course","progress","member_type","enrollment_from_batch","purchased_certificate","certificate","creation"]&limit=300&order_by=creation desc');
+  if (!data) return;
+  S.enrollments.all = data;
+  S.enrollments.filtered = [...data];
+  // Populate course filter
+  const courseFilter = document.getElementById('enrollCourseFilter');
+  const courses = [...new Set(data.map(e => e.course).filter(Boolean))].sort();
+  courses.forEach(c => {
+    if (!courseFilter.querySelector(`option[value="${c}"]`)) {
+      const o = document.createElement('option'); o.value = c; o.textContent = c; courseFilter.appendChild(o);
+    }
+  });
+  renderEnrollments();
+}
+
+function filterEnrollments() {
+  const q = document.getElementById('enrollSearch').value.toLowerCase();
+  const type = document.getElementById('enrollTypeFilter').value;
+  const course = document.getElementById('enrollCourseFilter').value;
+  S.enrollments.filtered = S.enrollments.all.filter(e => {
+    const matchQ = !q || (e.member_name||e.member||'').toLowerCase().includes(q) || (e.course||'').toLowerCase().includes(q);
+    const matchType = !type || e.member_type === type;
+    const matchCourse = !course || e.course === course;
+    return matchQ && matchType && matchCourse;
+  });
+  S.enrollments.page = 1;
+  renderEnrollments();
+}
+
+function renderEnrollments() {
+  const { filtered, page } = S.enrollments;
+  document.getElementById('enrollCountLabel').textContent = `${filtered.length} enrollment${filtered.length!==1?'s':''}`;
+  const tbody = document.getElementById('enrollmentsBody');
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-faint);">No enrollments found</td></tr>`; return; }
+  const avatarColors = ['linear-gradient(135deg,#4A7C59,#2D5C3A)','linear-gradient(135deg,#C4942A,#8B6520)','linear-gradient(135deg,#2D7D9A,#1A5269)','linear-gradient(135deg,#5C4A32,#3D2E1A)','linear-gradient(135deg,#7C4A7A,#4A1C49)'];
+  tbody.innerHTML = getPage(filtered, page).map((e,i) => {
+    const name = e.member_name || e.member || '—';
+    const progress = Math.round(e.progress||0);
+    const safeId = encodeURIComponent(e.name);
+    return `<tr>
+      <td><div class="cell-with-avatar">
+        <div class="avatar-circle" style="background:${avatarColors[i%5]}">${(name[0]||'?').toUpperCase()}</div>
+        <div><div class="cell-main">${name}</div><div class="cell-sub">${e.member||''}</div></div>
+      </div></td>
+      <td>${e.course||'—'}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <div style="flex:1;height:6px;background:var(--cream3);border-radius:3px;min-width:60px;">
+            <div style="height:6px;background:var(--sage);border-radius:3px;width:${progress}%"></div>
+          </div>
+          <span style="font-size:0.75rem;color:var(--text-faint);font-weight:600;">${progress}%</span>
+        </div>
+      </td>
+      <td>${e.member_type ? badge(e.member_type==='Student'?'green':e.member_type==='Mentor'?'blue':'gold', e.member_type) : '—'}</td>
+      <td>${e.enrollment_from_batch||'—'}</td>
+      <td>${e.purchased_certificate ? badge('gold','Purchased') : (e.certificate ? badge('green','Issued') : badge('gray','None'))}</td>
+      <td><div class="row-actions">
+        <button class="action-btn del" onclick="confirmDelete('LMS Enrollment','${safeId}','${name.replace(/'/g,"\\'")}')">Remove</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderPagination('enrollPagination', page, filtered.length, n => { S.enrollments.page = n; renderEnrollments(); });
+}
+
+// ════════════════════════════════════════════════
+//  BATCH ENROLLMENTS
+// ════════════════════════════════════════════════
+async function loadBatchEnrollments() {
+  const data = await apiGet('/api/resource/LMS Batch Enrollment?fields=["name","member","member_name","batch","source","payment","confirmation_email_sent","creation"]&limit=300&order_by=creation desc');
+  if (!data) return;
+  S.batchEnrolls.all = data;
+  S.batchEnrolls.filtered = [...data];
+  renderBatchEnrollments();
+}
+
+function filterBatchEnrollments() {
+  const q = document.getElementById('batchEnrollSearch').value.toLowerCase();
+  const batch = document.getElementById('batchEnrollBatchFilter').value;
+  S.batchEnrolls.filtered = S.batchEnrolls.all.filter(e => {
+    const matchQ = !q || (e.member_name||e.member||'').toLowerCase().includes(q);
+    const matchBatch = !batch || e.batch === batch;
+    return matchQ && matchBatch;
+  });
+  S.batchEnrolls.page = 1;
+  renderBatchEnrollments();
+}
+
+function renderBatchEnrollments() {
+  const { filtered, page } = S.batchEnrolls;
+  document.getElementById('batchEnrollCountLabel').textContent = `${filtered.length} enrollment${filtered.length!==1?'s':''}`;
+  const tbody = document.getElementById('batchEnrollmentsBody');
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-faint);">No batch enrollments found</td></tr>`; return; }
+  const avatarColors = ['linear-gradient(135deg,#4A7C59,#2D5C3A)','linear-gradient(135deg,#C4942A,#8B6520)','linear-gradient(135deg,#2D7D9A,#1A5269)','linear-gradient(135deg,#5C4A32,#3D2E1A)','linear-gradient(135deg,#7C4A7A,#4A1C49)'];
+  tbody.innerHTML = getPage(filtered, page).map((e,i) => {
+    const name = e.member_name || e.member || '—';
+    const safeId = encodeURIComponent(e.name);
+    return `<tr>
+      <td><div class="cell-with-avatar">
+        <div class="avatar-circle" style="background:${avatarColors[i%5]}">${(name[0]||'?').toUpperCase()}</div>
+        <div><div class="cell-main">${name}</div><div class="cell-sub">${e.member||''}</div></div>
+      </div></td>
+      <td>${e.batch||'—'}</td>
+      <td>${e.source||'—'}</td>
+      <td>${e.payment ? badge('green','Paid') : badge('gray','No Payment')}</td>
+      <td>${e.confirmation_email_sent ? badge('green','Sent') : badge('gray','Pending')}</td>
+      <td><div class="row-actions">
+        <button class="action-btn del" onclick="confirmDelete('LMS Batch Enrollment','${safeId}','${name.replace(/'/g,"\\'")}')">Remove</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderPagination('batchEnrollPagination', page, filtered.length, n => { S.batchEnrolls.page = n; renderBatchEnrollments(); });
+}
+
 // ════════════════════════════════════════════════
 let _currentViewLead = null;
 
